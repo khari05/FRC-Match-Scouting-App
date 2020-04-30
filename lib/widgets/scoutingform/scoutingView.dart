@@ -6,10 +6,7 @@ import 'package:frc_scouting/widgets/scoutingform/scoutingPage.dart';
 import 'package:http/http.dart' as http;
 
 Widget scoutingView(BuildContext context, int teamNumber, int matchId) {
-  Future<http.Response> _scout = http.get(url + "/scout/", headers: {
-    "team_number":teamNumber.toString(),
-    "matchid":matchId.toString(),
-  });
+  Future<http.Response> _scout = http.get("$url/scout/$teamNumber/$matchId");
   return FutureBuilder(
     future: _scout,
     builder: (BuildContext context, AsyncSnapshot<http.Response> response) {

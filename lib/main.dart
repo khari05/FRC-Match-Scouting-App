@@ -23,7 +23,7 @@ class MainMenu extends StatelessWidget{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar( // appbar is the header
-        title: Text('Match List'),
+        title: Text('Event List'),
       ),
       body: Center(
         child: eventView(context)

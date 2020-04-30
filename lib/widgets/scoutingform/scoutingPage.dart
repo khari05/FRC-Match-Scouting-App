@@ -29,7 +29,8 @@ Widget scoutingPage(BuildContext context, ScoutData form) {
       ),
     ),
     floatingActionButton: FloatingActionButton(child: Icon(Icons.save), onPressed: () => {
-      http.post(url + "/scout/", body: form.toJsonString())
+      http.post("$url/scout/${form.teamNumber}/${form.matchId}", body: form.toJsonString()),
+      Navigator.pop(context)
     }),
   );
 }

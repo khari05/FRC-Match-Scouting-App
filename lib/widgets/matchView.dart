@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 dynamic responseJson;
 
 Widget matchView(BuildContext context, String eventKey, String eventName) {
-  Future<http.Response> _matches = http.get(url + "/matches/" + eventKey);
+  Future<http.Response> _matches = http.get("$url/matches/$eventKey");
   return FutureBuilder(
     future: _matches,
     builder: (BuildContext context, AsyncSnapshot<http.Response> response) {
