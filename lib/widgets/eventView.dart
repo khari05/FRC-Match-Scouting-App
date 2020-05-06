@@ -48,18 +48,3 @@ Widget eventList(BuildContext context, List responseJson) {
     }
   );
 }
-
-// RaisedButton(
-//   child: ListTile(
-//     title: Text("Dalton Scouting"),
-//     trailing: Icon(Icons.arrow_forward),
-//   ),
-//   onPressed: () => {
-//     Navigator.push(context, MaterialPageRoute<void>( // when clicked, it opens the match list and scouting for Dalton
-//       builder: (BuildContext context) {
-//         return matchView(context, "2020gadal");
-//       },
-//     )),
-//   }
-// ),
-// Padding(padding: EdgeInsets.all(2.5)),

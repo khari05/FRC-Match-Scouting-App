@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:frc_scouting/main.dart';
+import 'package:http/http.dart' as http;
+
+String _eventName;
+String _blueAllianceId;
 
 Widget addDialog(BuildContext context) {
   return SimpleDialog(
@@ -22,6 +27,10 @@ Widget addDialog(BuildContext context) {
             }),
             Padding(padding: EdgeInsets.only(left:10)),
             RaisedButton(child: Text("Add"), onPressed: () => {
+              http.post("$url/addevents", body: {
+                "event_name": _eventName,
+                "blue_alliance_id": _blueAllianceId
+              }),
               Navigator.pop(context),
             })
           ],
@@ -46,6 +55,7 @@ class _EventNameInputState extends State<EventNameInput> {
       decoration: InputDecoration(
         hintText: "Event Name",
       ),
+      onChanged: (newValue) => _eventName = newValue,
     );
   }
 }
@@ -65,6 +75,7 @@ class _EventIdInputState extends State<EventIdInput> {
       decoration: InputDecoration(
         hintText: "Blue Alliance Event Id",
       ),
+      onChanged: (newValue) => _blueAllianceId = newValue
     );
   }
 }
