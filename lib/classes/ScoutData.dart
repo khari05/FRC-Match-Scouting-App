@@ -31,7 +31,7 @@ class ScoutData {
     attemptedHighScored = (json["attemptedHighScored"] != null) ? json["attemptedHighScored"] : 0;
     colorSpin = (json["colorSpin"] != null) ? json["colorSpin"] : false;
     colorSelect = (json["colorSelect"] != null) ? json["colorSelect"] : false;
-    hanging = (json["hanging"] != null) ? json["hanging"] : 0;
+    hanging = (json["hanging"] != null) ? json["hanging"].roundToDouble() : 0.roundToDouble();
   }
   toJsonString() {
     return {
@@ -49,7 +49,43 @@ class ScoutData {
         "colorSpin":colorSpin,
         "colorSelect":colorSelect,
         "hanging":hanging,
+        "totalScored":totalAutonScored+lowScored+outerScored+innerScored,
+        "totalAttempted":totalAutonAttempted+attemptedLowScored+attemptedHighScored,
       }
     };
+  }
+  edit(String key, dynamic value) {
+    switch (key) {
+      case "autonLine": autonLine = value; break;
+      case "autonLow": autonLow = value; break;
+      case "autonHigh": autonHigh = value; break;
+      case "totalAutonAttempted": totalAutonAttempted = value; break;
+      case "totalAutonScored": totalAutonScored = value; break;
+      case "lowScored": lowScored = value; break;
+      case "outerScored": outerScored = value; break;
+      case "innerScored": innerScored = value; break;
+      case "attemptedLowScored": attemptedLowScored = value; break;
+      case "attemptedHighScored": attemptedHighScored = value; break;
+      case "colorSpin": colorSpin = value; break;
+      case "colorSelect": colorSelect = value; break;
+      case "hanging": hanging = value; break;
+    }
+  }
+  view(String key) {
+    switch (key) {
+      case "autonLine": return autonLine; break;
+      case "autonLow": return autonLow; break;
+      case "autonHigh": return autonHigh; break;
+      case "totalAutonAttempted": return totalAutonAttempted; break;
+      case "totalAutonScored": return totalAutonScored; break;
+      case "lowScored": return lowScored; break;
+      case "outerScored": return outerScored; break;
+      case "innerScored": return innerScored; break;
+      case "attemptedLowScored": return attemptedLowScored; break;
+      case "attemptedHighScored": return attemptedHighScored; break;
+      case "colorSpin": return colorSpin; break;
+      case "colorSelect": return colorSelect; break;
+      case "hanging": return hanging; break;
+    }
   }
 }

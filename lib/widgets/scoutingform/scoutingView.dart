@@ -12,12 +12,14 @@ Widget scoutingView(BuildContext context, int teamNumber, int matchId) {
     builder: (BuildContext context, AsyncSnapshot<http.Response> response) {
       if (response.hasData && response.data.body != "") {
         return scoutingPage(context, ScoutData(jsonDecode(response.data.body)["data"], teamNumber, matchId));
+      } else if (response.hasData && response.data.body == "") {
+        return scoutingPage(context, ScoutData(jsonDecode("{}"), teamNumber, matchId));
       } else if (response.hasError) {
         print("response has an error: " + response.error.toString());
         return Scaffold();
       } else {
         print("error: no data");
-        return scoutingPage(context, ScoutData(jsonDecode("{}"), teamNumber, matchId));
+        return Scaffold();
       }
     }
   );

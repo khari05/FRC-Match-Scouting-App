@@ -1,49 +1,77 @@
 import 'package:flutter/material.dart';
+import 'package:frc_scouting/classes/ScoutData.dart';
 import 'package:numberpicker/numberpicker.dart';
 
-class NumberChooser extends StatefulWidget {
-  int value;
-  NumberChooser(this.value);
+class NumberCard extends StatefulWidget {
+  final ScoutData form;
+  final String value;
+  final String text;
+  NumberCard(this.form, this.value, this.text);
 
   @override
-  _NumberChooserState createState() => _NumberChooserState();
+  _NumberCardState createState() => _NumberCardState();
 }
 
-class _NumberChooserState extends State<NumberChooser> {
+class _NumberCardState extends State<NumberCard> {
   @override
   Widget build(BuildContext context) {
-    return NumberPicker.integer(
-      initialValue: widget.value,
-      minValue: 0,
-      maxValue: 60,
-      onChanged: (newValue) {
-        setState(() {
-          widget.value = newValue;
-        });
-      });
+    int value = widget.form.view(widget.value);
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(widget.text),
+            NumberPicker.integer(
+              minValue: 0,
+              maxValue: 60,
+              initialValue: value,
+              onChanged: (newValue) {
+                setState(() {
+                  value = newValue;
+                  widget.form.edit(widget.value, newValue);
+                });
+              }
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
-class CustomCheckBox extends StatefulWidget {
-  bool value;
+class CheckBoxCard extends StatefulWidget {
+  final ScoutData form;
+  final String value;
   final String text;
-  CustomCheckBox(this.value, this.text);
+  CheckBoxCard(this.form, this.value, this.text);
 
   @override
-  _CustomCheckBoxState createState() => _CustomCheckBoxState();
+  _CheckBoxCardState createState() => _CheckBoxCardState();
 }
 
-class _CustomCheckBoxState extends State<CustomCheckBox> {
+class _CheckBoxCardState extends State<CheckBoxCard> {
   @override
   Widget build(BuildContext context) {
-    return CheckboxListTile(
-      title: Text(widget.text),
-      value: widget.value,
-      onChanged: (newValue) => {
-        setState(() {
-          widget.value = newValue;
-        })
-      }
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(widget.text),
+            Checkbox(
+              value: widget.form.view(widget.value),
+              onChanged: (newValue) => {
+                setState(() {
+                  widget.form.edit(widget.value, newValue);
+                })
+              }
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
