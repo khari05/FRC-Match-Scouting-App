@@ -25,11 +25,29 @@ Widget matchView(BuildContext context, String eventKey, String eventName) {
         return Scaffold();
       } else {
         print("error: no data");
-        return Scaffold();
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(eventName),
+          ),
+          body: matchReqView(context, eventKey),
+        );
       }
     }
   );
 }
+
+Widget matchReqView(BuildContext context, String eventKey) {
+  return Center(
+    child: RaisedButton(
+      child: Text("Pull Matches From TBA"),
+      onPressed: () => {
+        http.put("$url/pullmatches/$eventKey"),
+        Navigator.pop(context)
+      }
+    ),
+  );
+}
+
 Widget matchListView(BuildContext context, List responseJson, String eventKey) {
   return ListView.builder(
     itemCount: responseJson.length,
