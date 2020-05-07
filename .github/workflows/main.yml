@@ -1,7 +1,10 @@
-name: Test + Deploy
+name: CI
 
 on:
   push:
+    branches:
+      - master
+  pull_request:
     branches:
       - master
 
@@ -11,13 +14,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v1.3.1
-        with:
-          channel: beta
-      - name: Install dependencies
-        run: flutter pub get
-        if: success
-      - name: Run tests
-        run: flutter pub run test
-        if: success()
+    - uses: actions/checkout@v1
+
+    - name: install dependencies
+      uses: steebchen/flutter@v1.0.0
+      with:
+        args: pub get
+
+    - name: run tests
+      uses: steebchen/flutter@v1.0.0
+      with:
+        args: test
