@@ -13,12 +13,12 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    container:
-      image:  google/dart:latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Install dependencies
-      run: pub get
-    - name: Run tests
-      run: pub run test
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1.3.1
+        with:
+          channel: beta
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Run Tests
+        run: flutter test
