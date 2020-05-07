@@ -18,10 +18,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Install Flutter
-        run: git clone https://github.com/flutter/flutter.git --depth 1 -b beta
-        if: success()
-      - run: echo "::add-path::$GITHUB_WORKSPACE/_flutter/bin"
+      - uses: takuyaohashi/setup-flutter@v1
+        with:
+            channel: 'beta'
       - name: Install dependencies
         run: flutter pub get
 #       - name: Run tests
