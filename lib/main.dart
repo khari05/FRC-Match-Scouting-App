@@ -4,7 +4,7 @@ import 'package:frc_scouting/widgets/eventView.dart';
 
 // initialize constants
 final String teamNumber = "7451";
-final String url = "http://localhost:3000";
+final String url = "https://frc-match-scouting.herokuapp.com";
 
 void main() => runApp(App());
 
