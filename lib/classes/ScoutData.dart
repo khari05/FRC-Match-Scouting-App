@@ -18,6 +18,9 @@ class ScoutData {
   bool colorSelect;
   double hanging;
 
+  int amountOfStucks;
+  int amountOfPenalties;
+
   ScoutData(dynamic json, this.teamNumber, this.matchId) {
     autonLine = (json["autonLine"] != null) ? json["autonLine"] : false;
     autonLow = (json["autonLow"] != null) ? json["autonLow"] : false;
@@ -31,7 +34,9 @@ class ScoutData {
     attemptedHighScored = (json["attemptedHighScored"] != null) ? json["attemptedHighScored"] : 0;
     colorSpin = (json["colorSpin"] != null) ? json["colorSpin"] : false;
     colorSelect = (json["colorSelect"] != null) ? json["colorSelect"] : false;
-    hanging = (json["hanging"] != null) ? json["hanging"].roundToDouble() : 0.roundToDouble();
+    hanging = (json["hanging"] != null) ? json["hanging"].toDouble() : null;
+    amountOfStucks = (json["amountOfStucks"] != null) ? json["amountOfStucks"] : 0;
+    amountOfPenalties = (json["amountOfPenalties"] != null) ? json["amountOfPenalties"] : 0;
   }
   toJsonString() {
     return {
@@ -49,6 +54,8 @@ class ScoutData {
         "colorSpin":colorSpin,
         "colorSelect":colorSelect,
         "hanging":hanging,
+        "amountOfStucks":amountOfStucks,
+        "amountOfPenalties":amountOfPenalties,
         "totalScored":totalAutonScored+lowScored+outerScored+innerScored,
         "totalAttempted":totalAutonAttempted+attemptedLowScored+attemptedHighScored,
       }
@@ -69,6 +76,8 @@ class ScoutData {
       case "colorSpin": colorSpin = value; break;
       case "colorSelect": colorSelect = value; break;
       case "hanging": hanging = value; break;
+      case "amountOfStucks": amountOfStucks = value; break;
+      case "amountOfPenalties": amountOfPenalties = value; break;
     }
   }
   view(String key) {
@@ -86,6 +95,8 @@ class ScoutData {
       case "colorSpin": return colorSpin; break;
       case "colorSelect": return colorSelect; break;
       case "hanging": return hanging; break;
+      case "amountOfStucks": return amountOfStucks; break;
+      case "amountOfPenalties": return amountOfPenalties; break;
     }
   }
 }

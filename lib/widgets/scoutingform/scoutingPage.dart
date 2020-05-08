@@ -11,7 +11,7 @@ Widget scoutingPage(BuildContext context, ScoutData form) {
     appBar: AppBar(title: Text("Scouting Team #" + form.teamNumber.toString())),
     body: Center(
       child: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.only(top:16,left:8,right:8,bottom:8),
         child: ListView(
           children: <Widget>[
             Text("Autonomous", style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
@@ -26,6 +26,12 @@ Widget scoutingPage(BuildContext context, ScoutData form) {
             NumberCard(form, "innerScored", "Total scored in the inner goal"),
             NumberCard(form, "attemptedLowScored", "Total attempted to score in the low goal"),
             NumberCard(form, "attemptedHighScored", "Total attempted to score in the high goal"),
+            Text("End Game", style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+            CheckBoxCard(form, "colorSpin", "Does the team spin the Control Panel? (stage 2)"),
+            CheckBoxCard(form, "colorSelect", "Does the team spin the Control Panel\nto a specific color? (stage 3)"),
+            HangDropdown(form),
+            NumberCard(form, "amountOfStucks", "Number of times the robot gets stuck"),
+            NumberCard(form, "amountOfPenalties", "Number of penalties the team gets")
           ],
         ),
       ),

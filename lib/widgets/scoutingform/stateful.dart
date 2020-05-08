@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:frc_scouting/classes/ScoutData.dart';
 import 'package:numberpicker/numberpicker.dart';
 
+final List<dynamic> hangOptions = [
+  {"value":0,"text":"Didn't hang"},
+  {"value":0.5,"text":"Attempted to hang"},
+  {"value":1,"text":"Hung on the side/middle"}
+];
+
 class NumberCard extends StatefulWidget {
   final ScoutData form;
   final String value;
@@ -70,6 +76,40 @@ class _CheckBoxCardState extends State<CheckBoxCard> {
               }
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class HangDropdown extends StatefulWidget {
+  final ScoutData form;
+  HangDropdown(this.form);
+
+  @override
+  _HangDropdownState createState() => _HangDropdownState();
+}
+
+class _HangDropdownState extends State<HangDropdown> {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: DropdownButton<dynamic>(
+          hint: Text("Hanging"),
+          value: widget.form.hanging,
+          items: hangOptions.map((options){
+            return DropdownMenuItem(
+              child: Text(options["text"]),
+              value: options["value"],
+            );
+          }).toList(),
+          onChanged: (newValue) => {
+            setState((){
+              widget.form.hanging = newValue.toDouble();
+            })
+          },
         ),
       ),
     );
