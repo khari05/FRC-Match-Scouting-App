@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 Widget scoutingPage(BuildContext context, ScoutData form) {
   return Scaffold(
-    appBar: AppBar(title: Text("Scouting Team #" + form.teamNumber.toString())),
+    appBar: AppBar(title: Text("Scouting Team #${form.teamNumber}")),
     body: Center(
       child: Padding(
         padding: EdgeInsets.only(top:16,left:8,right:8,bottom:8),

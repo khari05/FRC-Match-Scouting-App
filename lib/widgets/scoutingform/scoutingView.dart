@@ -19,7 +19,12 @@ Widget scoutingView(BuildContext context, int teamNumber, int matchId) {
         return Scaffold();
       } else {
         print("error: no data");
-        return Scaffold();
+        return Scaffold(
+          appBar: AppBar(title: Text("Scouting Team #$teamNumber")),
+          body: Center(
+            child: CircularProgressIndicator(),
+          )
+        );
       }
     }
   );

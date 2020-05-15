@@ -20,16 +20,23 @@ Widget matchView(BuildContext context, String eventKey, String eventName) {
               child: matchListView(context, jsonDecode(response.data.body), eventKey),
             ),
           );
+      } else if (response.hasData && response.data.body == "[]") {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(eventName),
+          ),
+          body: matchReqView(context, eventKey),
+        );
       } else if (response.hasError) {
         print("response has an error: " + response.error.toString());
         return Scaffold();
       } else {
         print("error: no data");
         return Scaffold(
-          appBar: AppBar(
-            title: Text(eventName),
-          ),
-          body: matchReqView(context, eventKey),
+          appBar: AppBar(title: Text("Scouting Team #$teamNumber")),
+          body: Center(
+            child: CircularProgressIndicator(),
+          )
         );
       }
     }

@@ -1,11 +1,11 @@
 {
-    "name": "frc_scouting",
-    "short_name": "frc_scouting",
+    "name": "FRC Match Scouting",
+    "short_name": "FRC Match Scouting",
     "start_url": ".",
     "display": "minimal-ui",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "A match scouting app for FRC.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

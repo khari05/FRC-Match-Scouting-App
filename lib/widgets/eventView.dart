@@ -19,7 +19,9 @@ Widget eventView(BuildContext context) {
         return Container();
       } else {
         print("error: no data");
-        return Container();
+        return Center(
+          child: CircularProgressIndicator(),
+        );
       }
     }
   );
