@@ -33,7 +33,7 @@ Widget matchView(BuildContext context, String eventKey, String eventName) {
       } else {
         print("error: no data");
         return Scaffold(
-          appBar: AppBar(title: Text("Scouting Team #$teamNumber")),
+          appBar: AppBar(title: Text(eventName)),
           body: Center(
             child: CircularProgressIndicator(),
           )
