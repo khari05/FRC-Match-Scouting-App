@@ -5,39 +5,44 @@ import 'package:http/http.dart' as http;
 String _eventName;
 String _blueAllianceId;
 
-Widget addDialog(BuildContext context) {
-  return SimpleDialog(
-    children: <Widget>[
-      Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          children: <Widget>[
-            EventNameInput(),
-            EventIdInput(),
-          ],
+class AddDialog extends StatelessWidget {
+  const AddDialog({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: <Widget>[
+              EventNameInput(),
+              EventIdInput(),
+            ],
+          ),
         ),
-      ),
-      Container(
-        padding: EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            FlatButton(child: Text("Cancel"), onPressed: () => {
-              Navigator.pop(context)
-            }),
-            Padding(padding: EdgeInsets.only(left:10)),
-            RaisedButton(child: Text("Add"), onPressed: () => {
-              http.post("$url/addevents", body: {
-                "event_name": _eventName,
-                "blue_alliance_id": _blueAllianceId
+        Container(
+          padding: EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              FlatButton(child: Text("Cancel"), onPressed: () => {
+                Navigator.pop(context)
               }),
-              Navigator.pop(context),
-            })
-          ],
+              Padding(padding: EdgeInsets.only(left:10)),
+              RaisedButton(child: Text("Add"), onPressed: () => {
+                http.post("$url/addevents", body: {
+                  "event_name": _eventName,
+                  "blue_alliance_id": _blueAllianceId
+                }),
+                Navigator.pop(context),
+              })
+            ],
+          )
         )
-      )
-    ],
-  );
+      ],
+    );
+  }
 }
 
 class EventNameInput extends StatefulWidget {
