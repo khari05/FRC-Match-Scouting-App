@@ -3,9 +3,8 @@ import 'package:frc_scouting/classes/ScoutData.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 final List<dynamic> hangOptions = [
-  {"value":0,"text":"Didn't hang"},
-  {"value":0.5,"text":"Attempted to hang"},
-  {"value":1,"text":"Hung on the side/middle"}
+  {"value": 0, "text": "Didn't hang"},
+  {"value": 1, "text": "Hung on the side/middle"}
 ];
 
 class NumberCard extends StatefulWidget {
@@ -30,16 +29,15 @@ class _NumberCardState extends State<NumberCard> {
           children: <Widget>[
             Text(widget.text),
             NumberPicker.integer(
-              minValue: 0,
-              maxValue: 60,
-              initialValue: value,
-              onChanged: (newValue) {
-                setState(() {
-                  value = newValue;
-                  widget.form.edit(widget.value, newValue);
-                });
-              }
-            ),
+                minValue: 0,
+                maxValue: 60,
+                initialValue: value,
+                onChanged: (newValue) {
+                  setState(() {
+                    value = newValue;
+                    widget.form.edit(widget.value, newValue);
+                  });
+                }),
           ],
         ),
       ),
@@ -68,13 +66,12 @@ class _CheckBoxCardState extends State<CheckBoxCard> {
           children: <Widget>[
             Text(widget.text),
             Checkbox(
-              value: widget.form.view(widget.value),
-              onChanged: (newValue) => {
-                setState(() {
-                  widget.form.edit(widget.value, newValue);
-                })
-              }
-            ),
+                value: widget.form.view(widget.value),
+                onChanged: (newValue) => {
+                      setState(() {
+                        widget.form.edit(widget.value, newValue);
+                      })
+                    }),
           ],
         ),
       ),
@@ -99,14 +96,14 @@ class _HangDropdownState extends State<HangDropdown> {
         child: DropdownButton<dynamic>(
           hint: Text("Hanging"),
           value: widget.form.hanging,
-          items: hangOptions.map((options){
+          items: hangOptions.map((options) {
             return DropdownMenuItem(
               child: Text(options["text"]),
               value: options["value"],
             );
           }).toList(),
           onChanged: (newValue) => {
-            setState((){
+            setState(() {
               widget.form.hanging = newValue.toDouble();
             })
           },

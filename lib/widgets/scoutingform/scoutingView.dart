@@ -10,31 +10,43 @@ class ScoutingView extends StatelessWidget {
   final int matchId;
   final String eventKey;
 
-  const ScoutingView({Key key, @required this.teamNumber, @required this.matchId, @required this.eventKey}) : super(key: key);
-  
+  const ScoutingView(
+      {Key key,
+      @required this.teamNumber,
+      @required this.matchId,
+      @required this.eventKey})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Future<http.Response> _scout = http.get("$url/scout/$teamNumber/$matchId");
     return FutureBuilder(
-      future: _scout,
-      builder: (BuildContext context, AsyncSnapshot<http.Response> response) {
-        if (response.hasData && response.data.body != "") {
-          return ScoutingPage(form: ScoutData(jsonDecode(response.data.body)["data"], teamNumber, matchId,), eventKey: eventKey,);
-        } else if (response.hasData && response.data.body == "") {
-          return ScoutingPage(form: ScoutData(jsonDecode("{}"), teamNumber, matchId), eventKey: eventKey);
-        } else if (response.hasError) {
-          print("response has an error: " + response.error.toString());
-          return Scaffold();
-        } else {
-          print("error: no data");
-          return Scaffold(
-            appBar: AppBar(title: Text("Scouting Team #$teamNumber")),
-            body: Center(
-              child: CircularProgressIndicator(),
-            )
-          );
-        }
-      }
-    );
+        future: _scout,
+        builder: (BuildContext context, AsyncSnapshot<http.Response> response) {
+          if (response.hasData && response.data.body != "") {
+            return ScoutingPage(
+              form: ScoutData(
+                jsonDecode(response.data.body)["data"],
+                teamNumber,
+                matchId,
+              ),
+              eventKey: eventKey,
+            );
+          } else if (response.hasData && response.data.body == "") {
+            return ScoutingPage(
+                form: ScoutData(jsonDecode("{}"), teamNumber, matchId),
+                eventKey: eventKey);
+          } else if (response.hasError) {
+            print("response has an error: " + response.error.toString());
+            return Scaffold();
+          } else {
+            print("error: no data");
+            return Scaffold(
+                appBar: AppBar(title: Text("Scouting Team #$teamNumber")),
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ));
+          }
+        });
   }
 }

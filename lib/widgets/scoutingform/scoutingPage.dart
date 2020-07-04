@@ -18,9 +18,8 @@ class ScoutingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Scouting Team #${form.teamNumber}"),
-        actions: [FlatButton.icon(
-          icon: Icon(Icons.person),
-          label: Text("View team profile"),
+        actions: [FlatButton(
+          child: Icon(Icons.person),
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(
               builder: (BuildContext context) {
