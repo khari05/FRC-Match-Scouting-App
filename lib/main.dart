@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frc_scouting/widgets/addDialog.dart';
+import 'package:frc_scouting/widgets/AddDialog.dart';
 import 'package:frc_scouting/widgets/eventView.dart';
 
 // initialize constants
@@ -12,31 +12,28 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(brightness: Brightness.dark, primarySwatch: Colors.teal),
-      home: MainMenu() // need to put app contents in a subclass in order to be able to call navigator
-    );
+        theme:
+            ThemeData(brightness: Brightness.dark, primarySwatch: Colors.teal),
+        home:
+            MainMenu() // need to put app contents in a subclass in order to be able to call navigator
+        );
   }
 }
 
-class MainMenu extends StatelessWidget{
+class MainMenu extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( // appbar is the header
+      appBar: AppBar(
+        // appbar is the header
         title: Text('Event List'),
       ),
-      body: Center(
-        child: eventView(context)
-      ),
+      body: Center(child: eventView(context)),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => {
-          showDialog(
-            context: context,
-            builder: (context) => addDialog(context)
-          )
-        }
-      ),
+          child: Icon(Icons.add),
+          onPressed: () => {
+                showDialog(context: context, builder: (context) => AddDialog())
+              }),
     );
   }
 }

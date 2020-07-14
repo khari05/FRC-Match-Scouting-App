@@ -11,29 +11,26 @@ class TeamChartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<ChartData> data = [
-      ChartData(data: 4, matchNumber: 1),
-      ChartData(data: 6, matchNumber: 2),
-      ChartData(data: 5, matchNumber: 3),
-      ChartData(data: 7, matchNumber: 4),
-      ChartData(data: 8, matchNumber: 5),
-      ChartData(data: 6, matchNumber: 6),
-      ChartData(data: 5, matchNumber: 7),
-      ChartData(data: 7, matchNumber: 8),
-    ];
-    // chartData.forEach((element) {
-    //   data.add(ChartData(
-    //     matchNumber: element["matchNumber"], data: element["data"]
-    //   ));
-    // });
+    //* We need to create an axis spec so the chart will render using colors that will look good in dark theme.
+    NumericAxisSpec axis = NumericAxisSpec(
+        renderSpec: GridlineRendererSpec(
+            labelStyle:
+                TextStyleSpec(fontSize: 10, color: MaterialPalette.white),
+            lineStyle: LineStyleSpec(
+                thickness: 0, color: MaterialPalette.gray.shadeDefault)));
+
+    List<ChartData> data = [];
+    chartData.forEach((element) {
+      data.add(ChartData(
+          matchNumber: element["matchNumber"], data: element["data"]));
+    });
     List<Series<ChartData, int>> series = [
       Series(
-        id: "",
-        data: data,
-        domainFn: (ChartData data, _) => data.matchNumber,
-        measureFn: (ChartData data, _) => data.data,
-        colorFn: (ChartData data, _) => ColorUtil.fromDartColor(Colors.teal)
-      )
+          id: "",
+          data: data,
+          domainFn: (ChartData data, _) => data.matchNumber,
+          measureFn: (ChartData data, _) => data.data,
+          colorFn: (ChartData data, _) => ColorUtil.fromDartColor(Colors.teal))
     ];
 
     return Scaffold(
@@ -43,7 +40,13 @@ class TeamChartView extends StatelessWidget {
       body: Center(
         child: Container(
           height: 400,
-            child: LineChart(series, animate: true),
+          child: LineChart(
+            series,
+            animate: true,
+            defaultRenderer: LineRendererConfig(includePoints: true),
+            primaryMeasureAxis: axis,
+            domainAxis: axis,
+          ),
         ),
       ),
     );
