@@ -32,9 +32,11 @@ class _TeamListViewState extends State<TeamListView> {
               teams.add(Team(element));
             });
             if (ascending) {
-              teams.sort((a, b) => (a.getValue(sortBy) - b.getValue(sortBy)));
+              teams.sort(
+                  (a, b) => (a.getValue(sortBy).compareTo(b.getValue(sortBy))));
             } else {
-              teams.sort((a, b) => (b.getValue(sortBy) - a.getValue(sortBy)));
+              teams.sort(
+                  (a, b) => (b.getValue(sortBy).compareTo(a.getValue(sortBy))));
             }
 
             return ListView.separated(
