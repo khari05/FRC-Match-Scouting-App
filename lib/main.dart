@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frc_scouting/widgets/AddDialog.dart';
 import 'package:frc_scouting/widgets/eventView.dart';
+// import 'package:frc_scouting/widgets/settings_page.dart';
 
 // initialize constants
 final String teamNumber = "7451";
-final String url = "https://frc-match-scouting.herokuapp.com";
+final String url = "http://localhost:3000";
 
 void main() => runApp(App());
 
@@ -27,13 +28,23 @@ class MainMenu extends StatelessWidget {
       appBar: AppBar(
         // appbar is the header
         title: Text('Event List'),
+        // TODO: Add a settings page
+        // actions: [
+        //   FlatButton(
+        //     child: Icon(Icons.settings),
+        //     onPressed: () =>
+        //         Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //       return SettingsPage();
+        //     })),
+        //   )
+        // ],
       ),
       body: Center(child: eventView(context)),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: () => {
-                showDialog(context: context, builder: (context) => AddDialog())
-              }),
+          onPressed: () {
+            showDialog(context: context, builder: (context) => AddDialog());
+          }),
     );
   }
 }
