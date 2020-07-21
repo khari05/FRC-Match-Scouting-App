@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:frc_scouting/classes/ScoutData.dart';
+import 'package:frc_scouting/models/scouting_data_model.dart';
 import 'package:frc_scouting/main.dart';
 import 'package:frc_scouting/widgets/scoutingform/stateful.dart';
 import 'package:frc_scouting/widgets/TeamView.dart';
 import 'package:http/http.dart' as http;
 
 class ScoutingPage extends StatelessWidget {
-  final ScoutData form;
+  final ScoutingDataModel form;
   final String eventKey;
 
   const ScoutingPage({Key key, @required this.form, @required this.eventKey}) : super(key: key);
@@ -57,7 +57,7 @@ class ScoutingPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(child: Icon(Icons.save), onPressed: () {
-        http.post("$url/scout/${form.teamNumber}/${form.matchId}", body: jsonEncode(form.toJsonString()), headers: {"Content-Type":"application/json"});
+        http.post("$url/scout/${form.teamNumber}/${form.matchId}", body: jsonEncode(form.toJson()), headers: {"Content-Type":"application/json"});
         Navigator.pop(context);
       }),
     );

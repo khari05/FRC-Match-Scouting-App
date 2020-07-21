@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:frc_scouting/classes/Team.dart';
 import 'package:frc_scouting/main.dart';
+import 'package:frc_scouting/models/team_model.dart';
 import 'package:frc_scouting/widgets/TeamChartView.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,7 +20,7 @@ class TeamView extends StatelessWidget {
         future: _teamData,
         builder: (BuildContext context, AsyncSnapshot<http.Response> response) {
           if (response.hasData && response.data.body != "[]") {
-            return TeamPage(team: Team(jsonDecode(response.data.body)));
+            return TeamPage(team: TeamModel.fromJson(jsonDecode(response.data.body)));
           } else if (response.hasError) {
             print("response has an error: ${response.error}");
             return Container();
@@ -36,7 +36,7 @@ class TeamView extends StatelessWidget {
 }
 
 class TeamPage extends StatefulWidget {
-  final Team team;
+  final TeamModel team;
   const TeamPage({Key key, @required this.team}) : super(key: key);
 
   @override

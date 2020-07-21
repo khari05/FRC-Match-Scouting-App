@@ -1,4 +1,4 @@
-class Team {
+class TeamModel {
   int teamNumber;
   String teamName;
   String eventKey;
@@ -13,10 +13,14 @@ class Team {
   double avgLow;
   double avgOuter;
   double avgInner;
+  double avgTotal;
+  double avgAttempted;
 
   List<int> lowScored;
   List<int> outerScored;
   List<int> innerScored;
+  List<int> totalScored;
+  List<int> totalAttempted;
 
   double avgPen;
   double avgHang;
@@ -24,7 +28,7 @@ class Team {
   List<int> penalties;
   List<int> hanging;
 
-  Team(dynamic json) {
+  TeamModel.fromJson(Map<String, dynamic> json) {
     teamNumber = json["team_number"];
     teamName = json["team_name"];
     eventKey = json["blue_alliance_id"];
@@ -55,6 +59,12 @@ class Team {
     avgInner = (json["data"] != null && json["data"]["avgInner"] != null)
         ? json["data"]["avgInner"].toDouble()
         : 0.toDouble();
+    avgTotal = (json["data"] != null && json["data"]["avgInner"] != null)
+        ? json["data"]["avgTotal"].toDouble()
+        : 0.toDouble();
+    avgAttempted = (json["data"] != null && json["data"]["avgInner"] != null)
+        ? json["data"]["avgAttempted"].toDouble()
+        : 0.toDouble();
 
     lowScored = (json["data"] != null && json["data"]["avgLow"] != null)
         ? json["data"]["lowScored"]
@@ -64,6 +74,12 @@ class Team {
         : [];
     innerScored = (json["data"] != null && json["data"]["avgInner"] != null)
         ? json["data"]["innerScored"]
+        : [];
+    totalScored = (json["data"] != null && json["data"]["avgInner"] != null)
+        ? json["data"]["totalScored"]
+        : [];
+    totalAttempted = (json["data"] != null && json["data"]["avgInner"] != null)
+        ? json["data"]["totalAttempted"]
         : [];
 
     avgPen = (json["data"] != null && json["data"]["avgPen"] != null)
@@ -81,7 +97,7 @@ class Team {
         : [];
   }
 
-  toJsonString() {
+  Map<String, dynamic> toJson() {
     return {
       "strengths": strengths,
       "flaws": flaws,
