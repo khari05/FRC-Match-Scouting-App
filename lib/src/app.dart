@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frc_scouting/widgets/AddDialog.dart';
-import 'package:frc_scouting/widgets/eventView.dart';
+import 'package:frc_scouting/src/widgets/AddDialog.dart';
+import 'package:frc_scouting/src/widgets/EventView.dart';
 // import 'package:frc_scouting/widgets/settings_page.dart';
 
 class App extends StatelessWidget {
@@ -33,7 +33,7 @@ class MainMenu extends StatelessWidget {
         //   )
         // ],
       ),
-      body: Center(child: eventView(context)),
+      body: Center(child: EventView()),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {

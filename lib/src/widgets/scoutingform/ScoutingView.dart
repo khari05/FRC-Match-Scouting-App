@@ -1,8 +1,9 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:frc_scouting/models/scouting_data_model.dart';
+import 'package:frc_scouting/src/models/scouting_data_model.dart';
 import 'package:frc_scouting/main.dart';
-import 'package:frc_scouting/widgets/scoutingform/ScoutingPage.dart';
+import 'package:frc_scouting/src/widgets/scoutingform/ScoutingPage.dart';
 import 'package:http/http.dart' as http;
 
 class ScoutingView extends StatelessWidget {
@@ -26,9 +27,9 @@ class ScoutingView extends StatelessWidget {
           if (response.hasData && response.data.body != "") {
             return ScoutingPage(
               form: ScoutingDataModel.fromJson(
-                jsonDecode(response.data.body)["data"],
-                teamNumber,
-                matchId,
+                json: jsonDecode(response.data.body)["data"],
+                teamNumber: teamNumber,
+                matchId: matchId,
               ),
               eventKey: eventKey,
             );

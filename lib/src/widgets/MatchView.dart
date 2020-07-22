@@ -1,10 +1,11 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:frc_scouting/main.dart';
-import 'package:frc_scouting/widgets/scoutingform/ScoutingView.dart';
+import 'package:frc_scouting/src/widgets/scoutingform/ScoutingView.dart';
 import 'package:http/http.dart' as http;
 
-dynamic responseJson;
+Map<String, dynamic> responseJson;
 
 class MatchView extends StatelessWidget {
   final String eventKey;

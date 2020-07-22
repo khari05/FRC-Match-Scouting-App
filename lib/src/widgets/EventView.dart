@@ -1,7 +1,8 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:frc_scouting/main.dart';
-import 'package:frc_scouting/widgets/EventPage.dart';
+import 'package:frc_scouting/src/widgets/EventPage.dart';
 import 'package:http/http.dart' as http;
 
 class EventView extends StatelessWidget {

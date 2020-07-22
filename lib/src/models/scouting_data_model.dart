@@ -47,7 +47,7 @@ class ScoutingDataModel {
     amountOfPenalties = 0;
   }
 
-  ScoutingDataModel.fromJson(Map<String, dynamic> json, this.teamNumber, this.matchId) {
+  ScoutingDataModel.fromJson({@required Map<String, dynamic> json, @required this.teamNumber, @required this.matchId}) {
     autonLine = (json["autonLine"] != null) ? json["autonLine"] : false;
     autonLow = (json["autonLow"] != null) ? json["autonLow"] : false;
     autonHigh = (json["autonHigh"] != null) ? json["autonHigh"] : false;

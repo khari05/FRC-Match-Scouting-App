@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frc_scouting/main.dart';
-import 'package:frc_scouting/widgets/TeamListView.dart';
-import 'package:frc_scouting/widgets/matchView.dart';
+import 'package:frc_scouting/src/widgets/TeamListView.dart';
+import 'package:frc_scouting/src/widgets/MatchView.dart';
 import 'package:http/http.dart' as http;
 
 class EventPage extends StatefulWidget {

@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:frc_scouting/models/scouting_data_model.dart';
+import 'package:frc_scouting/src/models/scouting_data_model.dart';
 import 'package:frc_scouting/main.dart';
-import 'package:frc_scouting/widgets/scoutingform/stateful.dart';
-import 'package:frc_scouting/widgets/TeamView.dart';
+import 'package:frc_scouting/src/widgets/scoutingform/stateful.dart';
+import 'package:frc_scouting/src/widgets/TeamView.dart';
 import 'package:http/http.dart' as http;
 
 class ScoutingPage extends StatelessWidget {

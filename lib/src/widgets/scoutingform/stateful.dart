@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frc_scouting/models/scouting_data_model.dart';
+import 'package:frc_scouting/src/models/scouting_data_model.dart';
 import 'package:numberpicker/numberpicker.dart';
-
-final List<dynamic> hangOptions = [
-  {"value": 0, "text": "Didn't hang"},
-  {"value": 1, "text": "Hung on the side/middle"}
-];
 
 class NumberCard extends StatefulWidget {
   final ScoutingDataModel form;
@@ -96,12 +91,16 @@ class _HangDropdownState extends State<HangDropdown> {
         child: DropdownButton<dynamic>(
           hint: Text("Hanging"),
           value: widget.form.hanging,
-          items: hangOptions.map((options) {
-            return DropdownMenuItem(
-              child: Text(options["text"]),
-              value: options["value"],
-            );
-          }).toList(),
+          items: [
+            DropdownMenuItem(
+              child: Text("Didn't Hang"),
+              value: 0,
+            ),
+            DropdownMenuItem(
+              child: Text("Hung on the side/middle"),
+              value: 1,
+            ),
+          ],
           onChanged: (newValue) => {
             setState(() {
               widget.form.hanging = newValue.toDouble();
