@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frc_scouting/blocs/blocs.dart';
 import 'package:frc_scouting/repositories/repositories.dart';
-import 'package:frc_scouting/widgets/AddDialog.dart';
+import 'package:frc_scouting/ui/dialogs/add_event_dialog.dart';
+// import 'package:frc_scouting/ui/views/settings_page.dart';
 import 'package:frc_scouting/widgets/EventPage.dart';
-// import 'package:frc_scouting/widgets/settings_page.dart';
 
 class EventView extends StatelessWidget {
   final EventRepository eventRepository;
@@ -40,7 +42,8 @@ class EventView extends StatelessWidget {
                     child: Icon(Icons.add),
                     onPressed: () {
                       showDialog(
-                          context: context, builder: (context) => AddDialog());
+                          context: context,
+                          builder: (context) => AddEventDialog());
                     });
               } else {
                 return Container();
@@ -49,7 +52,20 @@ class EventView extends StatelessWidget {
   }
 }
 
-class _EventCenter extends StatelessWidget {
+class _EventCenter extends StatefulWidget {
+  @override
+  __EventCenterState createState() => __EventCenterState();
+}
+
+class __EventCenterState extends State<_EventCenter> {
+  Completer<void> _refreshCompleter;
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshCompleter = Completer<void>();
+  }
+
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<EventBloc>(context).add(EventsRequested());
@@ -65,33 +81,44 @@ class _EventCenter extends StatelessWidget {
         }
         if (state is EventLoadSuccess) {
           final events = state.events;
-          return ListView.separated(
-              itemCount: events.length,
-              separatorBuilder: (context, index) =>
-                  Padding(padding: EdgeInsets.all(2.5)),
-              itemBuilder: (context, index) {
-                return RaisedButton(
-                    child: ListTile(
-                      title: Text(events[index].name),
-                      trailing: Icon(Icons.arrow_forward),
-                    ),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute<void>(
-                        // when clicked, it opens the match list and scouting for said item
-                        builder: (BuildContext context) {
-                          return EventPage(
-                              eventKey: events[index].blueAllianceId,
-                              eventName: events[index].name);
-                        },
-                      ));
-                    });
-              });
+          return RefreshIndicator(
+            onRefresh: () {
+              BlocProvider.of<EventBloc>(context).add(EventsRequested());
+              return _refreshCompleter.future;
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: ListView.separated(
+                  itemCount: events.length,
+                  separatorBuilder: (context, index) =>
+                      Padding(padding: EdgeInsets.all(2.5)),
+                  itemBuilder: (context, index) {
+                    return RaisedButton(
+                        child: ListTile(
+                          title: Text(events[index].name),
+                          trailing: Icon(Icons.arrow_forward),
+                        ),
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute<void>(
+                            // when clicked, it opens the match list and scouting for said item
+                            builder: (BuildContext context) {
+                              return EventPage(
+                                  eventKey: events[index].blueAllianceId,
+                                  eventName: events[index].name);
+                            },
+                          ));
+                        });
+                  }),
+            ),
+          );
         }
         if (state is EventLoadFailure) {
           return Text(
             "Something went wrong!",
             style: TextStyle(color: Colors.red),
           );
+        } else {
+          return Container();
         }
       }),
     );

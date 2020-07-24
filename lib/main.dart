@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frc_scouting/blocs/simple_bloc_observer.dart';
-import 'package:frc_scouting/repositories/event_api_provider.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:frc_scouting/blocs/simple_bloc_observer.dart';
+import 'package:frc_scouting/repositories/event_api_client.dart';
 import 'package:frc_scouting/repositories/repositories.dart';
 import 'package:frc_scouting/ui/views/event_view.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 final String baseUrl = "http://localhost:3000";
 
 void main() {
-  Bloc.observer = SimpleBlocObserver();
+  // Bloc.observer = SimpleBlocObserver();
   runApp(App());
 }
 

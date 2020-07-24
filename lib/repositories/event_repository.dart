@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:frc_scouting/repositories/event_api_provider.dart';
+import 'package:frc_scouting/repositories/event_api_client.dart';
 import 'package:frc_scouting/models/event.dart';
 
 class EventRepository {
