@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frc_scouting/main.dart';
-import 'package:frc_scouting/src/widgets/TeamListView.dart';
-import 'package:frc_scouting/src/widgets/MatchView.dart';
+import 'package:frc_scouting/widgets/TeamListView.dart';
+import 'package:frc_scouting/widgets/MatchView.dart';
 import 'package:http/http.dart' as http;
 
 class EventPage extends StatefulWidget {
@@ -32,7 +32,7 @@ class _EventPageState extends State<EventPage> {
                 : FlatButton(
                     child: Icon(Icons.refresh),
                     onPressed: () {
-                      http.put("$url/updateteams/${widget.eventKey}");
+                      http.put("$baseUrl/updateteams/${widget.eventKey}");
                       Navigator.pop(context);
                     },
                   )

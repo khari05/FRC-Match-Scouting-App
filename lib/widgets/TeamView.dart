@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:frc_scouting/main.dart';
-import 'package:frc_scouting/src/models/team_model.dart';
-import 'package:frc_scouting/src/widgets/TeamChartView.dart';
+import 'package:frc_scouting/models/team_model.dart';
+import 'package:frc_scouting/widgets/TeamChartView.dart';
 import 'package:http/http.dart' as http;
 
 class TeamView extends StatelessWidget {
@@ -15,7 +15,7 @@ class TeamView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<http.Response> _teamData =
-        http.get("$url/team/$teamNumber/$eventKey");
+        http.get("$baseUrl/team/$teamNumber/$eventKey");
     return FutureBuilder(
         future: _teamData,
         builder: (BuildContext context, AsyncSnapshot<http.Response> response) {

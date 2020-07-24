@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:frc_scouting/src/models/scouting_data_model.dart';
+import 'package:frc_scouting/models/scouting_data_model.dart';
 import 'package:frc_scouting/main.dart';
-import 'package:frc_scouting/src/widgets/scoutingform/stateful.dart';
-import 'package:frc_scouting/src/widgets/TeamView.dart';
+import 'package:frc_scouting/widgets/scoutingform/stateful.dart';
+import 'package:frc_scouting/widgets/TeamView.dart';
 import 'package:http/http.dart' as http;
 
 class ScoutingPage extends StatelessWidget {
@@ -39,7 +39,7 @@ class ScoutingPage extends StatelessWidget {
               CheckBoxCard(form, "autonLow", "Does the team score in the low goal?"),
               CheckBoxCard(form, "autonHigh", "Does the team score in the high goal?"),
               NumberCard(form, "totalAutonScored", "Total balls scored during autonomous"),
-              NumberCard(form, "totalAutonAttempted", "Total balls attempted to be scored\nduring autonomous"),
+              NumberCard(form, "totalAutonAttempted", "Total balls attempted to be scored during autonomous"),
               Text("TeleOp", style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
               NumberCard(form, "lowScored", "Total scored in the low goal"),
               NumberCard(form, "outerScored", "Total scored in the outer goal"),
@@ -47,8 +47,8 @@ class ScoutingPage extends StatelessWidget {
               NumberCard(form, "attemptedLowScored", "Total attempted to score in the low goal"),
               NumberCard(form, "attemptedHighScored", "Total attempted to score in the high goal"),
               Text("End Game", style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
-              CheckBoxCard(form, "colorSpin", "Does the team spin the Control Panel? (stage 2)"),
-              CheckBoxCard(form, "colorSelect", "Does the team spin the Control Panel\nto a specific color? (stage 3)"),
+              CheckBoxCard(form, "colorSpin", "Does the team spin the Control Panel 3 times? (stage 2)"),
+              CheckBoxCard(form, "colorSelect", "Does the team spin the Control Panel to a specific color? (stage 3)"),
               HangDropdown(form),
               NumberCard(form, "amountOfStucks", "Number of times the robot gets stuck"),
               NumberCard(form, "amountOfPenalties", "Number of penalties the team gets")
@@ -57,7 +57,7 @@ class ScoutingPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(child: Icon(Icons.save), onPressed: () {
-        http.post("$url/scout/${form.teamNumber}/${form.matchId}", body: jsonEncode(form.toJson()), headers: {"Content-Type":"application/json"});
+        http.post("$baseUrl/scout/${form.teamNumber}/${form.matchId}", body: jsonEncode(form.toJson()), headers: {"Content-Type":"application/json"});
         Navigator.pop(context);
       }),
     );

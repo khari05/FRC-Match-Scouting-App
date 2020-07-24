@@ -1,6 +1,6 @@
 import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:frc_scouting/src/models/chart_data.dart';
+import 'package:frc_scouting/models/chart_data.dart';
 
 class TeamChartView extends StatelessWidget {
   final List<dynamic> chartData;

@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:frc_scouting/main.dart';
-import 'package:frc_scouting/src/models/team_model.dart';
-import 'package:frc_scouting/src/widgets/TeamView.dart';
+import 'package:frc_scouting/models/team_model.dart';
+import 'package:frc_scouting/widgets/TeamView.dart';
 import 'package:http/http.dart' as http;
 
 class TeamListView extends StatefulWidget {
@@ -20,7 +20,7 @@ class _TeamListViewState extends State<TeamListView> {
   @override
   Widget build(BuildContext context) {
     TextStyle subtitleStyle = Theme.of(context).textTheme.subtitle2;
-    Future<http.Response> _teamData = http.get("$url/teams/${widget.eventKey}");
+    Future<http.Response> _teamData = http.get("$baseUrl/teams/${widget.eventKey}");
 
     return FutureBuilder(
         future: _teamData,
@@ -162,7 +162,7 @@ class _TeamListViewState extends State<TeamListView> {
             return RaisedButton(
                 child: Text("Pull Teams From TBA"),
                 onPressed: () {
-                  http.put("$url/pullteams/${widget.eventKey}");
+                  http.put("$baseUrl/pullteams/${widget.eventKey}");
                   Navigator.pop(context);
                 });
           } else if (response.hasError) {

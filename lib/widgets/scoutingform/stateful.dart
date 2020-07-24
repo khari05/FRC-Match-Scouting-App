@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frc_scouting/src/models/scouting_data_model.dart';
+import 'package:frc_scouting/models/scouting_data_model.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class NumberCard extends StatefulWidget {
@@ -22,7 +22,7 @@ class _NumberCardState extends State<NumberCard> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(widget.text),
+            Flexible(child: Text(widget.text)),
             NumberPicker.integer(
                 minValue: 0,
                 maxValue: 60,
@@ -59,7 +59,7 @@ class _CheckBoxCardState extends State<CheckBoxCard> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(widget.text),
+            Flexible(child: Text(widget.text)),
             Checkbox(
                 value: widget.form.view(widget.value),
                 onChanged: (newValue) => {

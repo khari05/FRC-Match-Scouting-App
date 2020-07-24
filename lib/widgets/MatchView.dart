@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:frc_scouting/main.dart';
-import 'package:frc_scouting/src/widgets/scoutingform/ScoutingView.dart';
+import 'package:frc_scouting/widgets/scoutingform/ScoutingView.dart';
 import 'package:http/http.dart' as http;
 
 Map<String, dynamic> responseJson;
@@ -13,7 +13,7 @@ class MatchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<http.Response> _matches = http.get("$url/matches/$eventKey");
+    Future<http.Response> _matches = http.get("$baseUrl/matches/$eventKey");
     return FutureBuilder(
         future: _matches,
         builder: (BuildContext context, AsyncSnapshot<http.Response> response) {
@@ -45,7 +45,7 @@ class MatchReqView extends StatelessWidget {
       child: RaisedButton(
           child: Text("Pull Matches From TBA"),
           onPressed: () {
-            http.put("$url/pullmatches/$eventKey");
+            http.put("$baseUrl/pullmatches/$eventKey");
             Navigator.pop(context);
           }),
     );

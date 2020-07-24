@@ -33,7 +33,7 @@ class AddDialog extends StatelessWidget {
                 RaisedButton(
                     child: Text("Add"),
                     onPressed: () => {
-                          http.post("$url/addevents", body: {
+                          http.post("$baseUrl/addevents", body: {
                             "event_name": _eventName,
                             "blue_alliance_id": _blueAllianceId
                           }),
