@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:frc_scouting/models/scouting_data_model.dart';
+import 'package:frc_scouting/models/scouting_data.dart';
 import 'package:frc_scouting/main.dart';
 import 'package:frc_scouting/widgets/scoutingform/ScoutingPage.dart';
 import 'package:http/http.dart' as http;
@@ -26,7 +26,7 @@ class ScoutingView extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<http.Response> response) {
           if (response.hasData && response.data.body != "") {
             return ScoutingPage(
-              form: ScoutingDataModel.fromJson(
+              form: ScoutingData.fromJson(
                 json: jsonDecode(response.data.body)["data"],
                 teamNumber: teamNumber,
                 matchId: matchId,
@@ -35,7 +35,7 @@ class ScoutingView extends StatelessWidget {
             );
           } else if (response.hasData && response.data.body == "") {
             return ScoutingPage(
-                form: ScoutingDataModel(teamNumber: teamNumber, matchId: matchId),
+                form: ScoutingData(teamNumber: teamNumber, matchId: matchId),
                 eventKey: eventKey);
           } else if (response.hasError) {
             print("response has an error: " + response.error.toString());

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ScoutingDataModel {
+class ScoutingData {
   int teamNumber;
   int matchId;
 
@@ -23,7 +23,7 @@ class ScoutingDataModel {
   int amountOfStucks;
   int amountOfPenalties;
 
-  ScoutingDataModel({
+  ScoutingData({
     @required this.teamNumber,
     @required this.matchId,
   }) {
@@ -47,7 +47,7 @@ class ScoutingDataModel {
     amountOfPenalties = 0;
   }
 
-  ScoutingDataModel.fromJson({@required Map<String, dynamic> json, @required this.teamNumber, @required this.matchId}) {
+  ScoutingData.fromJson({@required Map<String, dynamic> json, @required this.teamNumber, @required this.matchId}) {
     autonLine = (json["autonLine"] != null) ? json["autonLine"] : false;
     autonLow = (json["autonLow"] != null) ? json["autonLow"] : false;
     autonHigh = (json["autonHigh"] != null) ? json["autonHigh"] : false;
@@ -85,7 +85,7 @@ class ScoutingDataModel {
         "attemptedHighScored": attemptedHighScored,
         "colorSpin": colorSpin,
         "colorSelect": colorSelect,
-        "hanging": hanging,
+        "hanging": hanging != null ? hanging : 0,
         "amountOfStucks": amountOfStucks,
         "amountOfPenalties": amountOfPenalties,
         "totalScored": totalAutonScored + lowScored + outerScored + innerScored,

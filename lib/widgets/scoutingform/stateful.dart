@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:frc_scouting/models/scouting_data_model.dart';
+import 'package:frc_scouting/models/scouting_data.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class NumberCard extends StatefulWidget {
-  final ScoutingDataModel form;
+  final ScoutingData form;
   final String value;
   final String text;
   NumberCard(this.form, this.value, this.text);
@@ -41,7 +41,7 @@ class _NumberCardState extends State<NumberCard> {
 }
 
 class CheckBoxCard extends StatefulWidget {
-  final ScoutingDataModel form;
+  final ScoutingData form;
   final String value;
   final String text;
   CheckBoxCard(this.form, this.value, this.text);
@@ -75,7 +75,7 @@ class _CheckBoxCardState extends State<CheckBoxCard> {
 }
 
 class HangDropdown extends StatefulWidget {
-  final ScoutingDataModel form;
+  final ScoutingData form;
   HangDropdown(this.form);
 
   @override

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:frc_scouting/main.dart';
-import 'package:frc_scouting/models/team_model.dart';
+import 'package:frc_scouting/models/team.dart';
 import 'package:frc_scouting/widgets/TeamView.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,9 +27,9 @@ class _TeamListViewState extends State<TeamListView> {
         builder: (BuildContext context, AsyncSnapshot<http.Response> response) {
           if (response.hasData && response.data.body != "[]") {
             List responseJson = jsonDecode(response.data.body);
-            List<TeamModel> teams = [];
+            List<Team> teams = [];
             responseJson.forEach((element) {
-              teams.add(TeamModel.fromJson(element));
+              teams.add(Team.fromJson(element));
             });
             if (ascending) {
               teams.sort(

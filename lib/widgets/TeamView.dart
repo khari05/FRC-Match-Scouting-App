@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:frc_scouting/main.dart';
-import 'package:frc_scouting/models/team_model.dart';
+import 'package:frc_scouting/models/team.dart';
 import 'package:frc_scouting/widgets/TeamChartView.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,7 +20,8 @@ class TeamView extends StatelessWidget {
         future: _teamData,
         builder: (BuildContext context, AsyncSnapshot<http.Response> response) {
           if (response.hasData && response.data.body != "[]") {
-            return TeamPage(team: TeamModel.fromJson(jsonDecode(response.data.body)));
+            return TeamPage(
+                team: Team.fromJson(jsonDecode(response.data.body)));
           } else if (response.hasError) {
             print("response has an error: ${response.error}");
             return Container();
@@ -36,7 +37,7 @@ class TeamView extends StatelessWidget {
 }
 
 class TeamPage extends StatefulWidget {
-  final TeamModel team;
+  final Team team;
   const TeamPage({Key key, @required this.team}) : super(key: key);
 
   @override
@@ -78,9 +79,11 @@ class _TeamPageState extends State<TeamPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                        "Percentage of matches with hanging: ${widget.team.avgHang}",
-                        style: Theme.of(context).textTheme.subtitle1),
+                    Flexible(
+                      child: Text(
+                          "Percentage of matches with hanging: ${widget.team.avgHang}",
+                          style: Theme.of(context).textTheme.subtitle1),
+                    ),
                     Icon(Icons.arrow_forward)
                   ],
                 ),
@@ -97,8 +100,11 @@ class _TeamPageState extends State<TeamPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Average penalites per match: ${widget.team.avgPen}",
-                        style: Theme.of(context).textTheme.subtitle1),
+                    Flexible(
+                      child: Text(
+                          "Average penalites per match: ${widget.team.avgPen}",
+                          style: Theme.of(context).textTheme.subtitle1),
+                    ),
                     Icon(Icons.arrow_forward)
                   ],
                 ),
@@ -116,8 +122,10 @@ class _TeamPageState extends State<TeamPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Average Low Scored: ${widget.team.avgLow}",
-                        style: Theme.of(context).textTheme.subtitle1),
+                    Flexible(
+                      child: Text("Average Low Scored: ${widget.team.avgLow}",
+                          style: Theme.of(context).textTheme.subtitle1),
+                    ),
                     Icon(Icons.arrow_forward)
                   ],
                 ),
@@ -135,8 +143,11 @@ class _TeamPageState extends State<TeamPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Average Outer Scored: ${widget.team.avgOuter}",
-                        style: Theme.of(context).textTheme.subtitle1),
+                    Flexible(
+                      child: Text(
+                          "Average Outer Scored: ${widget.team.avgOuter}",
+                          style: Theme.of(context).textTheme.subtitle1),
+                    ),
                     Icon(Icons.arrow_forward)
                   ],
                 ),
@@ -154,8 +165,11 @@ class _TeamPageState extends State<TeamPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Average Inner Scored: ${widget.team.avgInner}",
-                        style: Theme.of(context).textTheme.subtitle1),
+                    Flexible(
+                      child: Text(
+                          "Average Inner Scored: ${widget.team.avgInner}",
+                          style: Theme.of(context).textTheme.subtitle1),
+                    ),
                     Icon(Icons.arrow_forward)
                   ],
                 ),

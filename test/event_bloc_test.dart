@@ -38,7 +38,7 @@ void main() {
       expect(true, eventBloc.state is EventInitial);
     });
 
-    blocTest("description",
+    blocTest("EventBloc parses the http.Response when events are requested",
         build: () => eventBloc,
         act: (EventBloc bloc) {
           bloc.add(EventsRequested());

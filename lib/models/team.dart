@@ -1,4 +1,6 @@
-class TeamModel {
+import 'package:frc_scouting/models/chart_data.dart';
+
+class Team {
   int teamNumber;
   String teamName;
   String eventKey;
@@ -16,19 +18,19 @@ class TeamModel {
   double avgTotal;
   double avgAttempted;
 
-  List<int> lowScored;
-  List<int> outerScored;
-  List<int> innerScored;
-  List<int> totalScored;
-  List<int> totalAttempted;
+  List<ChartData> lowScored;
+  List<ChartData> outerScored;
+  List<ChartData> innerScored;
+  List<ChartData> totalScored;
+  List<ChartData> totalAttempted;
 
   double avgPen;
   double avgHang;
 
-  List<int> penalties;
-  List<int> hanging;
+  List<ChartData> penalties;
+  List<ChartData> hanging;
 
-  TeamModel.fromJson(Map<String, dynamic> json) {
+  Team.fromJson(Map<String, dynamic> json) {
     teamNumber = json["team_number"];
     teamName = json["team_name"];
     eventKey = json["blue_alliance_id"];
@@ -50,37 +52,32 @@ class TeamModel {
         ? json["data"]["dpr"].toDouble()
         : 0.toDouble();
 
-    avgLow = (json["data"] != null && json["data"]["avgLow"] != null)
+    avgLow = (json["data"] != null)
         ? json["data"]["avgLow"].toDouble()
         : 0.toDouble();
-    avgOuter = (json["data"] != null && json["data"]["avgOuter"] != null)
+    avgOuter = (json["data"] != null)
         ? json["data"]["avgOuter"].toDouble()
         : 0.toDouble();
-    avgInner = (json["data"] != null && json["data"]["avgInner"] != null)
+    avgInner = (json["data"] != null)
         ? json["data"]["avgInner"].toDouble()
         : 0.toDouble();
-    avgTotal = (json["data"] != null && json["data"]["avgInner"] != null)
+    avgTotal = (json["data"] != null)
         ? json["data"]["avgTotal"].toDouble()
         : 0.toDouble();
-    avgAttempted = (json["data"] != null && json["data"]["avgInner"] != null)
+    avgAttempted = (json["data"] != null)
         ? json["data"]["avgAttempted"].toDouble()
         : 0.toDouble();
 
-    lowScored = (json["data"] != null && json["data"]["avgLow"] != null)
-        ? json["data"]["lowScored"]
-        : [];
-    outerScored = (json["data"] != null && json["data"]["avgOuter"] != null)
-        ? json["data"]["outerScored"]
-        : [];
-    innerScored = (json["data"] != null && json["data"]["avgInner"] != null)
-        ? json["data"]["innerScored"]
-        : [];
-    totalScored = (json["data"] != null && json["data"]["avgInner"] != null)
-        ? json["data"]["totalScored"]
-        : [];
-    totalAttempted = (json["data"] != null && json["data"]["avgInner"] != null)
-        ? json["data"]["totalAttempted"]
-        : [];
+    lowScored = ChartData.fromJson(
+        (json["data"] != null) ? json["data"]["lowScored"] : []);
+    outerScored = ChartData.fromJson(
+        (json["data"] != null) ? json["data"]["outerScored"] : []);
+    innerScored = ChartData.fromJson(
+        (json["data"] != null) ? json["data"]["innerScored"] : []);
+    totalScored = ChartData.fromJson(
+        (json["data"] != null) ? json["data"]["totalScored"] : []);
+    totalAttempted = ChartData.fromJson(
+        (json["data"] != null) ? json["data"]["totalAttempted"] : []);
 
     avgPen = (json["data"] != null && json["data"]["avgPen"] != null)
         ? json["data"]["avgPen"].toDouble()
@@ -89,12 +86,10 @@ class TeamModel {
         ? json["data"]["avgHang"].toDouble()
         : 0.toDouble();
 
-    penalties = (json["data"] != null && json["data"]["penalites"] != null)
-        ? json["data"]["penalites"]
-        : [];
-    hanging = (json["data"] != null && json["data"]["hanging"] != null)
-        ? json["data"]["hanging"]
-        : [];
+    penalties = ChartData.fromJson(
+        (json["data"] != null) ? json["data"]["penalties"] : []);
+    hanging = ChartData.fromJson(
+        (json["data"] != null) ? json["data"]["hanging"] : []);
   }
 
   Map<String, dynamic> toJson() {
