@@ -5,13 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frc_scouting/blocs/blocs.dart';
 import 'package:frc_scouting/repositories/repositories.dart';
 import 'package:frc_scouting/ui/dialogs/add_event_dialog.dart';
-// import 'package:frc_scouting/ui/views/settings_page.dart';
-import 'package:frc_scouting/widgets/EventPage.dart';
+// import 'package:frc_scouting/ui/pages/settings_page.dart';
+import 'package:frc_scouting/ui/pages/event_pages.dart';
 
-class EventView extends StatelessWidget {
+class EventListPage extends StatelessWidget {
   final EventRepository eventRepository;
 
-  const EventView({Key key, @required this.eventRepository})
+  const EventListPage({Key key, @required this.eventRepository})
       : assert(eventRepository != null),
         super(key: key);
 
@@ -102,7 +102,7 @@ class __EventCenterState extends State<_EventCenter> {
                           Navigator.push(context, MaterialPageRoute<void>(
                             // when clicked, it opens the match list and scouting for said item
                             builder: (BuildContext context) {
-                              return EventPage(
+                              return EventPages(
                                   eventKey: events[index].blueAllianceId,
                                   eventName: events[index].name);
                             },

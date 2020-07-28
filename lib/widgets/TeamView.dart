@@ -193,7 +193,7 @@ class _TeamPageState extends State<TeamPage> {
                 decoration: InputDecoration(
                   labelText: "Strengths",
                 ),
-                onChanged: (newValue) => {widget.team.strengths = newValue},
+                onChanged: (newValue) => /* {widget.team.strengths = newValue}, */ null
               ),
               TextField(
                 keyboardType: TextInputType.multiline,
@@ -205,7 +205,7 @@ class _TeamPageState extends State<TeamPage> {
                 decoration: InputDecoration(
                   labelText: "Weaknesses",
                 ),
-                onChanged: (newValue) => {widget.team.flaws = newValue},
+                onChanged: (newValue) => /* {widget.team.flaws = newValue}, */ null
               ),
               TextField(
                 keyboardType: TextInputType.multiline,
@@ -217,7 +217,7 @@ class _TeamPageState extends State<TeamPage> {
                 decoration: InputDecoration(
                   labelText: "Strategies",
                 ),
-                onChanged: (newValue) => {widget.team.flaws = newValue},
+                onChanged: (newValue) => /* {widget.team.flaws = newValue}, */ null
               ),
             ],
           ),

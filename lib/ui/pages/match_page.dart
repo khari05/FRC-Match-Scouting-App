@@ -1,43 +1,42 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:frc_scouting/main.dart';
+import 'package:frc_scouting/models/models.dart';
 import 'package:frc_scouting/widgets/scoutingform/ScoutingView.dart';
 import 'package:http/http.dart' as http;
 
-Map<String, dynamic> responseJson;
+// Map<String, dynamic> responseJson;
 
-class MatchView extends StatelessWidget {
+// class MatchView extends StatelessWidget {
+//   final String eventKey;
+//   const MatchView({Key key, @required this.eventKey}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     Future<http.Response> _matches = http.get("$baseUrl/matches/$eventKey");
+//     return FutureBuilder(
+//         future: _matches,
+//         builder: (BuildContext context, AsyncSnapshot<http.Response> response) {
+//           if (response.hasData && response.data.body != "[]") {
+//             return MatchListView(
+//                 responseJson: jsonDecode(response.data.body),
+//                 eventKey: eventKey);
+//           } else if (response.hasData && response.data.body == "[]") {
+//             return MatchReqView(eventKey: eventKey);
+//           } else if (response.hasError) {
+//             print("response has an error: " + response.error.toString());
+//             return Scaffold();
+//           } else {
+//             print("error: no data");
+//             return CircularProgressIndicator();
+//           }
+//         });
+//   }
+// }
+
+class MatchReqPage extends StatelessWidget {
   final String eventKey;
-  const MatchView({Key key, @required this.eventKey}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    Future<http.Response> _matches = http.get("$baseUrl/matches/$eventKey");
-    return FutureBuilder(
-        future: _matches,
-        builder: (BuildContext context, AsyncSnapshot<http.Response> response) {
-          if (response.hasData && response.data.body != "[]") {
-            return MatchListView(
-                responseJson: jsonDecode(response.data.body),
-                eventKey: eventKey);
-          } else if (response.hasData && response.data.body == "[]") {
-            return MatchReqView(eventKey: eventKey);
-          } else if (response.hasError) {
-            print("response has an error: " + response.error.toString());
-            return Scaffold();
-          } else {
-            print("error: no data");
-            return CircularProgressIndicator();
-          }
-        });
-  }
-}
-
-class MatchReqView extends StatelessWidget {
-  final String eventKey;
-
-  const MatchReqView({Key key, @required this.eventKey}) : super(key: key);
+  const MatchReqPage({Key key, @required this.eventKey}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,18 +51,18 @@ class MatchReqView extends StatelessWidget {
   }
 }
 
-class MatchListView extends StatelessWidget {
+class MatchListPage extends StatelessWidget {
   final String eventKey;
-  final List responseJson;
+  final List<MatchObject> matches;
 
-  const MatchListView(
-      {Key key, @required this.eventKey, @required this.responseJson})
+  const MatchListPage(
+      {Key key, @required this.eventKey, @required this.matches})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: responseJson.length,
+        itemCount: matches.length,
         itemBuilder: (context, index) {
           return Container(
               padding: EdgeInsets.all(5),
@@ -72,7 +71,7 @@ class MatchListView extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       "Qual " +
-                          matchNumber(responseJson[index]["match_number"]),
+                          matchNumber(matches[index].matchNumber),
                       textAlign: TextAlign.center,
                     ),
                     Column(
@@ -83,19 +82,16 @@ class MatchListView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 TeamButton(
-                                    index: index,
-                                    responseJson: responseJson,
-                                    station: "red1",
+                                    teamNumber: matches[index].red1,
+                                    matchId: matches[index].id,
                                     eventKey: eventKey),
                                 TeamButton(
-                                    index: index,
-                                    responseJson: responseJson,
-                                    station: "red2",
+                                    teamNumber: matches[index].red2,
+                                    matchId: matches[index].id,
                                     eventKey: eventKey),
                                 TeamButton(
-                                    index: index,
-                                    responseJson: responseJson,
-                                    station: "red3",
+                                    teamNumber: matches[index].red3,
+                                    matchId: matches[index].id,
                                     eventKey: eventKey)
                               ],
                             )),
@@ -105,19 +101,16 @@ class MatchListView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 TeamButton(
-                                    index: index,
-                                    responseJson: responseJson,
-                                    station: "blue1",
+                                    teamNumber: matches[index].blue1,
+                                    matchId: matches[index].id,
                                     eventKey: eventKey),
                                 TeamButton(
-                                    index: index,
-                                    responseJson: responseJson,
-                                    station: "blue2",
+                                    teamNumber: matches[index].blue2,
+                                    matchId: matches[index].id,
                                     eventKey: eventKey),
                                 TeamButton(
-                                    index: index,
-                                    responseJson: responseJson,
-                                    station: "blue3",
+                                    teamNumber: matches[index].blue3,
+                                    matchId: matches[index].id,
                                     eventKey: eventKey)
                               ],
                             ))
@@ -129,29 +122,27 @@ class MatchListView extends StatelessWidget {
 }
 
 class TeamButton extends StatelessWidget {
-  final int index;
-  final dynamic responseJson;
-  final String station;
+  final int teamNumber;
+  final int matchId;
   final String eventKey;
 
   const TeamButton(
       {Key key,
-      @required this.index,
-      @required this.responseJson,
-      @required this.station,
+      @required this.teamNumber,
+      @required this.matchId,
       @required this.eventKey})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      child: Text(responseJson[index][station].toString()),
+      child: Text(teamNumber.toString()),
       onPressed: () {
         Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) {
           return ScoutingView(
-              teamNumber: responseJson[index][station],
-              matchId: responseJson[index]["id"],
+              teamNumber: teamNumber,
+              matchId: matchId,
               eventKey: eventKey);
         }));
       },

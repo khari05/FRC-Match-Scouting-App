@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:frc_scouting/blocs/simple_bloc_observer.dart';
 import 'package:frc_scouting/repositories/event_api_client.dart';
 import 'package:frc_scouting/repositories/repositories.dart';
-import 'package:frc_scouting/ui/views/event_view.dart';
+import 'package:frc_scouting/ui/pages/event_list_page.dart';
 import 'package:http/http.dart' as http;
 
 // initialize constants
@@ -21,7 +21,7 @@ class App extends StatelessWidget {
         theme:
             ThemeData(brightness: Brightness.dark, primarySwatch: Colors.teal),
         home:
-            EventView(eventRepository: EventRepository(eventApiClient: EventApiClient(httpClient: http.Client())),) // need to put app contents in a subclass in order to be able to call navigator
+            EventListPage(eventRepository: EventRepository(eventApiClient: EventApiClient(httpClient: http.Client())),) // need to put app contents in a subclass in order to be able to call navigator
         );
   }
 }
