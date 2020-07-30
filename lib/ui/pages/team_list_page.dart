@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frc_scouting/blocs/blocs.dart';
 import 'package:frc_scouting/main.dart';
 import 'package:frc_scouting/models/models.dart';
 import 'package:frc_scouting/widgets/TeamView.dart';
@@ -8,14 +10,15 @@ class TeamReqPage extends StatelessWidget {
   final String eventKey;
 
   const TeamReqPage({Key key, this.eventKey}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
         child: Text("Pull Teams From TBA"),
         onPressed: () {
           http.put("$baseUrl/pullteams/$eventKey");
-          Navigator.pop(context);
+          BlocProvider.of<BottomNavigationBloc>(context)
+              .add(PageSwitched(index: 1));
         });
   }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frc_scouting/blocs/bottom_navigation_bloc.dart';
-import 'package:frc_scouting/blocs/bottom_navigation_event.dart';
-import 'package:frc_scouting/blocs/bottom_navigation_state.dart';
+import 'package:frc_scouting/blocs/blocs.dart';
+import 'package:frc_scouting/main.dart';
 import 'package:frc_scouting/repositories/match_api_client.dart';
 import 'package:frc_scouting/repositories/repositories.dart';
 import 'package:frc_scouting/repositories/team_api_client.dart';
@@ -29,50 +28,60 @@ class EventPages extends StatelessWidget {
       child: Scaffold(
           appBar: AppBar(
             title: Text(eventName),
-            // actions: [
-            //   _index == 0
-            //       ? Container()
-            //       : FlatButton(
-            //           child: Icon(Icons.refresh),
-            //           onPressed: () {
-            //             http.put("$baseUrl/updateteams/$eventKey");
-            //             Navigator.pop(context);
-            //           },
-            //         )
-            // ],
+            actions: [
+              BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
+                  builder: (context, state) {
+                if (state is TeamPageLoaded) {
+                  return FlatButton(
+                    child: Icon(Icons.refresh),
+                    onPressed: () {
+                      http.put("$baseUrl/updateteams/$eventKey");
+                      BlocProvider.of<BottomNavigationBloc>(context)
+                          .add(PageSwitched(index: 1));
+                    },
+                  );
+                } else {
+                  return Container();
+                }
+              })
+            ],
           ),
           body: Center(
-            child: BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
-                builder: (context, state) {
-              if (state is BottomNavigationInitial) {
-                return Container();
-              }
-              if (state is PageLoading) {
-                return CircularProgressIndicator();
-              }
-              if (state is MatchPageLoaded) {
-                return MatchListPage(
-                    eventKey: eventKey, matches: state.matches);
-              }
-              if (state is MatchPageEmpty) {
-                return MatchReqPage(eventKey: eventKey);
-              }
-              if (state is TeamPageLoaded) {
-                return TeamListPage(teams: state.teams);
-              }
-              if (state is TeamPageEmpty) {
-                return TeamReqPage(
-                  eventKey: eventKey,
-                );
-              }
-              if (state is PageLoadError) {
-                return Text(
-                  "Something went wrong!",
-                  style: TextStyle(color: Colors.red),
-                );
-              } else {
-                return Container();
-              }
+            child: Builder(builder: (context) {
+              BlocProvider.of<BottomNavigationBloc>(context)
+                  .add(PageSwitched(index: 0));
+              return BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
+                  builder: (context, state) {
+                if (state is BottomNavigationInitial) {
+                  return Container();
+                }
+                if (state is PageLoading) {
+                  return CircularProgressIndicator();
+                }
+                if (state is MatchPageLoaded) {
+                  return MatchListPage(
+                      eventKey: eventKey, matches: state.matches);
+                }
+                if (state is MatchPageEmpty) {
+                  return MatchReqPage(eventKey: eventKey);
+                }
+                if (state is TeamPageLoaded) {
+                  return TeamListPage(teams: state.teams);
+                }
+                if (state is TeamPageEmpty) {
+                  return TeamReqPage(
+                    eventKey: eventKey,
+                  );
+                }
+                if (state is PageLoadError) {
+                  return Text(
+                    "Something went wrong!",
+                    style: TextStyle(color: Colors.red),
+                  );
+                } else {
+                  return Container();
+                }
+              });
             }),
           ),
           bottomNavigationBar: Builder(builder: (context) {

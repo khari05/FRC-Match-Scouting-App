@@ -1,37 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frc_scouting/blocs/blocs.dart';
 import 'package:frc_scouting/main.dart';
 import 'package:frc_scouting/models/models.dart';
 import 'package:frc_scouting/widgets/scoutingform/ScoutingView.dart';
 import 'package:http/http.dart' as http;
-
-// Map<String, dynamic> responseJson;
-
-// class MatchView extends StatelessWidget {
-//   final String eventKey;
-//   const MatchView({Key key, @required this.eventKey}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     Future<http.Response> _matches = http.get("$baseUrl/matches/$eventKey");
-//     return FutureBuilder(
-//         future: _matches,
-//         builder: (BuildContext context, AsyncSnapshot<http.Response> response) {
-//           if (response.hasData && response.data.body != "[]") {
-//             return MatchListView(
-//                 responseJson: jsonDecode(response.data.body),
-//                 eventKey: eventKey);
-//           } else if (response.hasData && response.data.body == "[]") {
-//             return MatchReqView(eventKey: eventKey);
-//           } else if (response.hasError) {
-//             print("response has an error: " + response.error.toString());
-//             return Scaffold();
-//           } else {
-//             print("error: no data");
-//             return CircularProgressIndicator();
-//           }
-//         });
-//   }
-// }
 
 class MatchReqPage extends StatelessWidget {
   final String eventKey;
@@ -45,7 +18,8 @@ class MatchReqPage extends StatelessWidget {
           child: Text("Pull Matches From TBA"),
           onPressed: () {
             http.put("$baseUrl/pullmatches/$eventKey");
-            Navigator.pop(context);
+            BlocProvider.of<BottomNavigationBloc>(context)
+                .add(PageSwitched(index: 0));
           }),
     );
   }
@@ -70,8 +44,7 @@ class MatchListPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Text(
-                      "Qual " +
-                          matchNumber(matches[index].matchNumber),
+                      "Qual " + matchNumber(matches[index].matchNumber),
                       textAlign: TextAlign.center,
                     ),
                     Column(
@@ -141,9 +114,7 @@ class TeamButton extends StatelessWidget {
         Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) {
           return ScoutingView(
-              teamNumber: teamNumber,
-              matchId: matchId,
-              eventKey: eventKey);
+              teamNumber: teamNumber, matchId: matchId, eventKey: eventKey);
         }));
       },
     );

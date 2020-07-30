@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frc_scouting/blocs/bottom_navigation_event.dart';
-import 'package:frc_scouting/blocs/bottom_navigation_state.dart';
+import 'package:frc_scouting/blocs/blocs.dart';
 import 'package:frc_scouting/models/models.dart';
 import 'package:frc_scouting/repositories/repositories.dart';
 
