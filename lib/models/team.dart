@@ -11,7 +11,7 @@ class Team extends Equatable {
   final String strategies;
 
   final double opr;
-  final double dpr;
+  final double elo;
 
   final double avgLow;
   final double avgOuter;
@@ -28,7 +28,7 @@ class Team extends Equatable {
   final List<ChartData> percentScored;
 
   final double avgPen;
-  final double avgHang;
+  final int avgHang;
 
   final List<ChartData> penalties;
   final List<ChartData> hanging;
@@ -41,7 +41,7 @@ class Team extends Equatable {
       this.flaws,
       this.strategies,
       this.opr,
-      this.dpr,
+      this.elo,
       this.avgLow,
       this.avgOuter,
       this.avgInner,
@@ -100,8 +100,8 @@ class Team extends Equatable {
         opr: (json["data"] != null && json["data"]["opr"] != null)
             ? json["data"]["opr"].toDouble()
             : 0.toDouble(),
-        dpr: (json["data"] != null && json["data"]["dpr"] != null)
-            ? json["data"]["dpr"].toDouble()
+        elo: (json["data"] != null && json["data"]["elo"] != null)
+            ? json["data"]["elo"].toDouble()
             : 0.toDouble(),
         avgLow: (json["data"] != null)
             ? json["data"]["avgLow"].toDouble()
@@ -126,14 +126,46 @@ class Team extends Equatable {
             ? json["data"]["avgPen"].toDouble()
             : 0.toDouble(),
         avgHang: (json["data"] != null && json["data"]["avgHang"] != null)
-            ? json["data"]["avgHang"].toDouble()
-            : 0.toDouble(),
+            ? json["data"]["avgHang"].round()
+            : 0,
         penalties: ChartData.fromJson(
             (json["data"] != null) ? json["data"]["penalties"] : []),
         hanging: ChartData.fromJson(
             (json["data"] != null) ? json["data"]["hanging"] : []),
-        // avgPercent: (_avgTotal / _avgAttempted * 100).round(),
+        avgPercent: (_avgTotal != 0.toDouble())
+            ? (_avgTotal / _avgAttempted * 100).round()
+            : 0,
         percentScored: _percentScored);
+  }
+
+  static Team updateTeam(Team team,
+      {String strengths, String flaws, String strategies}) {
+    return Team(
+      teamNumber: team.teamNumber,
+      teamName: team.teamName,
+      eventKey: team.eventKey,
+      strengths: strengths ?? team.strengths,
+      flaws: flaws ?? team.flaws,
+      strategies: strategies ?? team.strategies,
+      opr: team.opr,
+      elo: team.elo,
+      avgLow: team.avgLow,
+      avgOuter: team.avgOuter,
+      avgInner: team.avgInner,
+      avgTotal: team.avgTotal,
+      avgAttempted: team.avgAttempted,
+      avgPercent: team.avgPercent,
+      lowScored: team.lowScored,
+      outerScored: team.outerScored,
+      innerScored: team.innerScored,
+      totalScored: team.totalScored,
+      totalAttempted: team.totalAttempted,
+      percentScored: team.percentScored,
+      avgPen: team.avgPen,
+      avgHang: team.avgHang,
+      penalties: team.penalties,
+      hanging: team.hanging,
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -153,7 +185,7 @@ class Team extends Equatable {
         return opr;
         break;
       case 2:
-        return dpr;
+        return elo;
         break;
       case 3:
         return avgLow;
@@ -182,7 +214,7 @@ class Team extends Equatable {
         flaws,
         strategies,
         opr,
-        dpr,
+        elo,
         avgLow,
         avgOuter,
         avgInner,

@@ -37,8 +37,10 @@ class MatchPageEmpty extends BottomNavigationState {}
 
 class TeamPageLoaded extends BottomNavigationState {
   final List<Team> teams;
+  final int sortMethod;
+  final bool ascending;
 
-  TeamPageLoaded({@required this.teams}) : assert(teams != null);
+  TeamPageLoaded({@required this.teams, @required this.sortMethod, @required this.ascending}) : assert(teams != null);
 }
 
 class TeamPageEmpty extends BottomNavigationState {}

@@ -42,12 +42,29 @@ class BottomNavigationBloc
           if (teams.length == 0) {
             yield TeamPageEmpty();
           } else {
-            yield TeamPageLoaded(teams: teams);
+            yield TeamPageLoaded(teams: teams, ascending: event.ascending ?? true, sortMethod: event.sortMethod ?? 0);
           }
         }
       } catch (err) {
         yield PageLoadError();
+        print(err);
       }
+    }
+    if (event is SortChanged) {
+      List<Team> teams = event.teams;
+      final int sortMethod = event.sortMethod;
+
+      yield PageLoading();
+
+      if (event.ascending) {
+        teams.sort((a, b) =>
+            (a.getValue(sortMethod).compareTo(b.getValue(sortMethod))));
+      } else {
+        teams.sort((a, b) =>
+            (b.getValue(sortMethod).compareTo(a.getValue(sortMethod))));
+      }
+      yield TeamPageLoaded(
+          teams: teams, sortMethod: sortMethod, ascending: event.ascending);
     }
   }
 }

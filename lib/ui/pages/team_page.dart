@@ -6,10 +6,10 @@ import 'package:frc_scouting/models/team.dart';
 import 'package:frc_scouting/widgets/TeamChartView.dart';
 import 'package:http/http.dart' as http;
 
-class TeamView extends StatelessWidget {
+class TeamLoader extends StatelessWidget {
   final int teamNumber;
   final String eventKey;
-  const TeamView({Key key, @required this.teamNumber, @required this.eventKey})
+  const TeamLoader({Key key, @required this.teamNumber, @required this.eventKey})
       : super(key: key);
 
   @override
@@ -36,20 +36,17 @@ class TeamView extends StatelessWidget {
   }
 }
 
-class TeamPage extends StatefulWidget {
+class TeamPage extends StatelessWidget {
   final Team team;
   const TeamPage({Key key, @required this.team}) : super(key: key);
 
   @override
-  _TeamPageState createState() => _TeamPageState();
-}
-
-class _TeamPageState extends State<TeamPage> {
-  @override
   Widget build(BuildContext context) {
+    Team updatedTeam = team;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Team #${widget.team.teamNumber}"),
+        title: Text("Team #${team.teamNumber}"),
       ),
       body: Center(
         child: Padding(
@@ -60,7 +57,7 @@ class _TeamPageState extends State<TeamPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("OPR", style: Theme.of(context).textTheme.subtitle1),
-                  Text(widget.team.opr.toString(),
+                  Text(team.opr.toString(),
                       style: Theme.of(context).textTheme.subtitle1)
                 ],
               ),
@@ -70,8 +67,8 @@ class _TeamPageState extends State<TeamPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("DPR", style: Theme.of(context).textTheme.subtitle1),
-                  Text(widget.team.dpr.toString(),
+                  Text("Elo", style: Theme.of(context).textTheme.subtitle1),
+                  Text(team.elo.toString(),
                       style: Theme.of(context).textTheme.subtitle1),
                 ],
               ),
@@ -81,7 +78,7 @@ class _TeamPageState extends State<TeamPage> {
                   children: [
                     Flexible(
                       child: Text(
-                          "Percentage of matches with hanging: ${widget.team.avgHang}",
+                          "Percentage of matches with hanging: ${team.avgHang}%",
                           style: Theme.of(context).textTheme.subtitle1),
                     ),
                     Icon(Icons.arrow_forward)
@@ -91,8 +88,8 @@ class _TeamPageState extends State<TeamPage> {
                   Navigator.push((context),
                       MaterialPageRoute(builder: (context) {
                     return TeamChartView(
-                        chartData: widget.team.hanging,
-                        title: "Hanging from team #${widget.team.teamNumber}");
+                        chartData: team.hanging,
+                        title: "Hanging from team #${team.teamNumber}");
                   }));
                 },
               ),
@@ -101,8 +98,7 @@ class _TeamPageState extends State<TeamPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
-                      child: Text(
-                          "Average penalites per match: ${widget.team.avgPen}",
+                      child: Text("Average penalites per match: ${team.avgPen}",
                           style: Theme.of(context).textTheme.subtitle1),
                     ),
                     Icon(Icons.arrow_forward)
@@ -112,9 +108,8 @@ class _TeamPageState extends State<TeamPage> {
                   Navigator.push((context),
                       MaterialPageRoute(builder: (context) {
                     return TeamChartView(
-                        chartData: widget.team.penalties,
-                        title:
-                            "Penalties from team #${widget.team.teamNumber}");
+                        chartData: team.penalties,
+                        title: "Penalties from team #${team.teamNumber}");
                   }));
                 },
               ),
@@ -123,7 +118,7 @@ class _TeamPageState extends State<TeamPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
-                      child: Text("Average Low Scored: ${widget.team.avgLow}",
+                      child: Text("Average Percent Scored: ${team.avgPercent}%",
                           style: Theme.of(context).textTheme.subtitle1),
                     ),
                     Icon(Icons.arrow_forward)
@@ -133,9 +128,8 @@ class _TeamPageState extends State<TeamPage> {
                   Navigator.push((context),
                       MaterialPageRoute(builder: (context) {
                     return TeamChartView(
-                        chartData: widget.team.lowScored,
-                        title:
-                            "Lower scoring from team #${widget.team.teamNumber}");
+                        chartData: team.percentScored,
+                        title: "Percent scored from team #${team.teamNumber}");
                   }));
                 },
               ),
@@ -144,8 +138,7 @@ class _TeamPageState extends State<TeamPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
-                      child: Text(
-                          "Average Outer Scored: ${widget.team.avgOuter}",
+                      child: Text("Average Low Scored: ${team.avgLow}",
                           style: Theme.of(context).textTheme.subtitle1),
                     ),
                     Icon(Icons.arrow_forward)
@@ -155,9 +148,8 @@ class _TeamPageState extends State<TeamPage> {
                   Navigator.push((context),
                       MaterialPageRoute(builder: (context) {
                     return TeamChartView(
-                        chartData: widget.team.outerScored,
-                        title:
-                            "Outer scoring from team #${widget.team.teamNumber}");
+                        chartData: team.lowScored,
+                        title: "Lower scoring from team #${team.teamNumber}");
                   }));
                 },
               ),
@@ -166,8 +158,7 @@ class _TeamPageState extends State<TeamPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
-                      child: Text(
-                          "Average Inner Scored: ${widget.team.avgInner}",
+                      child: Text("Average Outer Scored: ${team.avgOuter}",
                           style: Theme.of(context).textTheme.subtitle1),
                     ),
                     Icon(Icons.arrow_forward)
@@ -177,9 +168,28 @@ class _TeamPageState extends State<TeamPage> {
                   Navigator.push((context),
                       MaterialPageRoute(builder: (context) {
                     return TeamChartView(
-                        chartData: widget.team.innerScored,
-                        title:
-                            "Inner scoring from team #${widget.team.teamNumber}");
+                        chartData: team.outerScored,
+                        title: "Outer scoring from team #${team.teamNumber}");
+                  }));
+                },
+              ),
+              RaisedButton(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Text("Average Inner Scored: ${team.avgInner}",
+                          style: Theme.of(context).textTheme.subtitle1),
+                    ),
+                    Icon(Icons.arrow_forward)
+                  ],
+                ),
+                onPressed: () {
+                  Navigator.push((context),
+                      MaterialPageRoute(builder: (context) {
+                    return TeamChartView(
+                        chartData: team.innerScored,
+                        title: "Inner scoring from team #${team.teamNumber}");
                   }));
                 },
               ),
@@ -189,11 +199,12 @@ class _TeamPageState extends State<TeamPage> {
                 maxLength: 250,
                 maxLengthEnforced: true,
                 autocorrect: true,
-                controller: TextEditingController(text: widget.team.strengths),
+                controller: TextEditingController(text: team.strengths),
                 decoration: InputDecoration(
                   labelText: "Strengths",
                 ),
-                onChanged: (newValue) => /* {widget.team.strengths = newValue}, */ null
+                onChanged: (newValue) => updatedTeam =
+                    Team.updateTeam(updatedTeam, strengths: newValue),
               ),
               TextField(
                 keyboardType: TextInputType.multiline,
@@ -201,11 +212,12 @@ class _TeamPageState extends State<TeamPage> {
                 maxLength: 250,
                 maxLengthEnforced: true,
                 autocorrect: true,
-                controller: TextEditingController(text: widget.team.flaws),
+                controller: TextEditingController(text: team.flaws),
                 decoration: InputDecoration(
                   labelText: "Weaknesses",
                 ),
-                onChanged: (newValue) => /* {widget.team.flaws = newValue}, */ null
+                onChanged: (newValue) =>
+                    updatedTeam = Team.updateTeam(updatedTeam, flaws: newValue),
               ),
               TextField(
                 keyboardType: TextInputType.multiline,
@@ -213,11 +225,12 @@ class _TeamPageState extends State<TeamPage> {
                 maxLength: 250,
                 maxLengthEnforced: true,
                 autocorrect: true,
-                controller: TextEditingController(text: widget.team.strategies),
+                controller: TextEditingController(text: team.strategies),
                 decoration: InputDecoration(
                   labelText: "Strategies",
                 ),
-                onChanged: (newValue) => /* {widget.team.flaws = newValue}, */ null
+                onChanged: (newValue) => updatedTeam =
+                    Team.updateTeam(updatedTeam, strategies: newValue),
               ),
             ],
           ),
@@ -226,7 +239,11 @@ class _TeamPageState extends State<TeamPage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.save),
         onPressed: () {
-          Navigator.pop(context);
+          http.post(
+              "$baseUrl/team/${updatedTeam.teamNumber}/${updatedTeam.eventKey}",
+              body: jsonEncode(updatedTeam.toJson()),
+              headers: {"Content-Type": "application/json"});
+          Navigator.pop(context, true);
         },
       ),
     );

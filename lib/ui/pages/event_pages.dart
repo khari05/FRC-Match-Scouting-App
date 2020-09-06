@@ -32,8 +32,8 @@ class EventPages extends StatelessWidget {
               BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
                   builder: (context, state) {
                 if (state is TeamPageLoaded) {
-                  return FlatButton(
-                    child: Icon(Icons.refresh),
+                  return IconButton(
+                    icon: Icon(Icons.refresh),
                     onPressed: () {
                       http.put("$baseUrl/updateteams/$eventKey");
                       BlocProvider.of<BottomNavigationBloc>(context)
@@ -52,10 +52,7 @@ class EventPages extends StatelessWidget {
                   .add(PageSwitched(index: 0));
               return BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
                   builder: (context, state) {
-                if (state is BottomNavigationInitial) {
-                  return Container();
-                }
-                if (state is PageLoading) {
+                if (state is PageLoading || state is PageLoadError) {
                   return CircularProgressIndicator();
                 }
                 if (state is MatchPageLoaded) {
@@ -66,17 +63,11 @@ class EventPages extends StatelessWidget {
                   return MatchReqPage(eventKey: eventKey);
                 }
                 if (state is TeamPageLoaded) {
-                  return TeamListPage(teams: state.teams);
+                  return TeamListPage(teams: state.teams, sortMethod: state.sortMethod, ascending: state.ascending);
                 }
                 if (state is TeamPageEmpty) {
                   return TeamReqPage(
                     eventKey: eventKey,
-                  );
-                }
-                if (state is PageLoadError) {
-                  return Text(
-                    "Something went wrong!",
-                    style: TextStyle(color: Colors.red),
                   );
                 } else {
                   return Container();

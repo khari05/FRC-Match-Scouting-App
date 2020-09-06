@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frc_scouting/models/scouting_data.dart';
 import 'package:frc_scouting/main.dart';
+import 'package:frc_scouting/ui/pages/team_page.dart';
 import 'package:frc_scouting/widgets/scoutingform/stateful.dart';
-import 'package:frc_scouting/widgets/TeamView.dart';
 import 'package:http/http.dart' as http;
 
 class ScoutingPage extends StatelessWidget {
@@ -18,12 +18,12 @@ class ScoutingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Scouting Team #${form.teamNumber}"),
-        actions: [FlatButton(
-          child: Icon(Icons.person),
+        actions: [IconButton(
+          icon: Icon(Icons.person),
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(
               builder: (BuildContext context) {
-                return TeamView(teamNumber: form.teamNumber, eventKey: eventKey,);
+                return TeamLoader(teamNumber: form.teamNumber, eventKey: eventKey,);
               }
             ));
           }
