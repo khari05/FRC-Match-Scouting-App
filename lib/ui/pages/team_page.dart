@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frc_scouting/main.dart';
 import 'package:frc_scouting/models/team.dart';
-import 'package:frc_scouting/widgets/TeamChartView.dart';
+import 'package:frc_scouting/ui/pages/team_chart_page.dart';
 import 'package:http/http.dart' as http;
 
 class TeamLoader extends StatelessWidget {
   final int teamNumber;
   final String eventKey;
-  const TeamLoader({Key key, @required this.teamNumber, @required this.eventKey})
+  const TeamLoader(
+      {Key key, @required this.teamNumber, @required this.eventKey})
       : super(key: key);
 
   @override
@@ -87,8 +88,8 @@ class TeamPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push((context),
                       MaterialPageRoute(builder: (context) {
-                    return TeamChartView(
-                        chartData: team.hanging,
+                    return TeamChartPage(
+                        data: team.hanging,
                         title: "Hanging from team #${team.teamNumber}");
                   }));
                 },
@@ -107,8 +108,8 @@ class TeamPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push((context),
                       MaterialPageRoute(builder: (context) {
-                    return TeamChartView(
-                        chartData: team.penalties,
+                    return TeamChartPage(
+                        data: team.penalties,
                         title: "Penalties from team #${team.teamNumber}");
                   }));
                 },
@@ -127,9 +128,11 @@ class TeamPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push((context),
                       MaterialPageRoute(builder: (context) {
-                    return TeamChartView(
-                        chartData: team.percentScored,
-                        title: "Percent scored from team #${team.teamNumber}");
+                    return TeamChartPage(
+                        data: team.percentScored,
+                        title: "Percent scored from team #${team.teamNumber}",
+                        maxY: 100,
+                        horizontalInterval: 10,);
                   }));
                 },
               ),
@@ -147,8 +150,8 @@ class TeamPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push((context),
                       MaterialPageRoute(builder: (context) {
-                    return TeamChartView(
-                        chartData: team.lowScored,
+                    return TeamChartPage(
+                        data: team.lowScored,
                         title: "Lower scoring from team #${team.teamNumber}");
                   }));
                 },
@@ -167,8 +170,8 @@ class TeamPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push((context),
                       MaterialPageRoute(builder: (context) {
-                    return TeamChartView(
-                        chartData: team.outerScored,
+                    return TeamChartPage(
+                        data: team.outerScored,
                         title: "Outer scoring from team #${team.teamNumber}");
                   }));
                 },
@@ -187,8 +190,8 @@ class TeamPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push((context),
                       MaterialPageRoute(builder: (context) {
-                    return TeamChartView(
-                        chartData: team.innerScored,
+                    return TeamChartPage(
+                        data: team.innerScored,
                         title: "Inner scoring from team #${team.teamNumber}");
                   }));
                 },

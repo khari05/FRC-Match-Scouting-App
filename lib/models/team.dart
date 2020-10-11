@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:frc_scouting/models/chart_data.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class Team extends Equatable {
   final int teamNumber;
@@ -20,18 +20,18 @@ class Team extends Equatable {
   final double avgAttempted;
   final int avgPercent;
 
-  final List<ChartData> lowScored;
-  final List<ChartData> outerScored;
-  final List<ChartData> innerScored;
-  final List<ChartData> totalScored;
-  final List<ChartData> totalAttempted;
-  final List<ChartData> percentScored;
+  final List<FlSpot> lowScored;
+  final List<FlSpot> outerScored;
+  final List<FlSpot> innerScored;
+  final List<FlSpot> totalScored;
+  final List<FlSpot> totalAttempted;
+  final List<FlSpot> percentScored;
 
   final double avgPen;
   final int avgHang;
 
-  final List<ChartData> penalties;
-  final List<ChartData> hanging;
+  final List<FlSpot> penalties;
+  final List<FlSpot> hanging;
 
   Team(
       {this.teamNumber,
@@ -60,28 +60,31 @@ class Team extends Equatable {
       this.hanging});
 
   static Team fromJson(Map<String, dynamic> json) {
-    double _avgTotal = (json["data"] != null)
+    final List<FlSpot> _emptyChart = [FlSpot(1, 0)];
+    final double _avgTotal = (json["data"] != null)
         ? json["data"]["avgTotal"].toDouble()
         : 0.toDouble();
-    double _avgAttempted = (json["data"] != null)
+    final double _avgAttempted = (json["data"] != null)
         ? json["data"]["avgAttempted"].toDouble()
         : 0.toDouble();
 
-    List<ChartData> _totalAttempted = ChartData.fromJson(
-        (json["data"] != null) ? json["data"]["totalAttempted"] : []);
-    List<ChartData> _totalScored = ChartData.fromJson(
-        (json["data"] != null) ? json["data"]["totalScored"] : []);
+    final List<FlSpot> _totalAttempted = (json["data"] != null)
+        ? _parseChart(json["data"]["totalAttempted"])
+        : _emptyChart;
+    final List<FlSpot> _totalScored = (json["data"] != null)
+        ? _parseChart(json["data"]["totalScored"])
+        : _emptyChart;
 
-    List<ChartData> _percentScored = [];
+    List<FlSpot> _percentScored = [];
     _totalAttempted.forEach((element) {
-      _percentScored.add(ChartData(
-          matchNumber: element.matchNumber,
-          data: (_totalScored
-                      .firstWhere((ChartData item) =>
-                          item.matchNumber == element.matchNumber)
-                      .data /
-                  element.data)
-              .round()));
+      _percentScored.add(FlSpot(
+          element.x,
+          element.y == 0 ? 0 : double.parse(((_totalScored
+                          .firstWhere((FlSpot item) => item.x == element.x)
+                          .y /
+                      element.y) *
+                  100)
+              .toStringAsFixed(2))));
     });
 
     return Team(
@@ -106,20 +109,22 @@ class Team extends Equatable {
         avgLow: (json["data"] != null)
             ? json["data"]["avgLow"].toDouble()
             : 0.toDouble(),
-        avgOuter: (json["data"] != null)
-            ? json["data"]["avgOuter"].toDouble()
-            : 0.toDouble(),
+        avgOuter:
+            (json["data"] != null) ? json["data"]["avgOuter"].toDouble() : 0,
         avgInner: (json["data"] != null)
             ? json["data"]["avgInner"].toDouble()
             : 0.toDouble(),
         avgTotal: _avgTotal,
         avgAttempted: _avgAttempted,
-        lowScored: ChartData.fromJson(
-            (json["data"] != null) ? json["data"]["lowScored"] : []),
-        outerScored: ChartData.fromJson(
-            (json["data"] != null) ? json["data"]["outerScored"] : []),
-        innerScored: ChartData.fromJson(
-            (json["data"] != null) ? json["data"]["innerScored"] : []),
+        lowScored: (json["data"] != null)
+            ? _parseChart(json["data"]["lowScored"])
+            : _emptyChart,
+        outerScored: (json["data"] != null)
+            ? _parseChart(json["data"]["outerScored"])
+            : _emptyChart,
+        innerScored: (json["data"] != null)
+            ? _parseChart(json["data"]["innerScored"])
+            : _emptyChart,
         totalScored: _totalScored,
         totalAttempted: _totalAttempted,
         avgPen: (json["data"] != null && json["data"]["avgPen"] != null)
@@ -128,14 +133,25 @@ class Team extends Equatable {
         avgHang: (json["data"] != null && json["data"]["avgHang"] != null)
             ? json["data"]["avgHang"].round()
             : 0,
-        penalties: ChartData.fromJson(
-            (json["data"] != null) ? json["data"]["penalties"] : []),
-        hanging: ChartData.fromJson(
-            (json["data"] != null) ? json["data"]["hanging"] : []),
+        penalties: (json["data"] != null)
+            ? _parseChart(json["data"]["penalties"])
+            : _emptyChart,
+        hanging: (json["data"] != null)
+            ? _parseChart(json["data"]["hanging"])
+            : _emptyChart,
         avgPercent: (_avgTotal != 0.toDouble())
             ? (_avgTotal / _avgAttempted * 100).round()
             : 0,
         percentScored: _percentScored);
+  }
+
+  static List<FlSpot> _parseChart(List<dynamic> parsedJson) {
+    List<FlSpot> data = [];
+    parsedJson.forEach((element) {
+      data.add(FlSpot(
+          element["matchNumber"].toDouble(), element["data"].toDouble()));
+    });
+    return data;
   }
 
   static Team updateTeam(Team team,
