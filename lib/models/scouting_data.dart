@@ -1,75 +1,109 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-class ScoutingData {
-  int teamNumber;
-  int matchId;
+class ScoutingData extends Equatable {
+  final int teamNumber;
+  final int matchId;
 
-  bool autonLine;
-  bool autonLow;
-  bool autonHigh;
-  int totalAutonAttempted;
-  int totalAutonScored;
+  final bool autonLine;
+  final bool autonLow;
+  final bool autonHigh;
+  final int totalAutonAttempted;
+  final int totalAutonScored;
 
-  int lowScored;
-  int outerScored;
-  int innerScored;
-  int attemptedLowScored;
-  int attemptedHighScored;
+  final int lowScored;
+  final int outerScored;
+  final int innerScored;
+  final int attemptedLowScored;
+  final int attemptedHighScored;
 
-  bool colorSpin;
-  bool colorSelect;
-  double hanging;
+  final bool colorSpin;
+  final bool colorSelect;
+  final double hanging;
 
-  int amountOfStucks;
-  int amountOfPenalties;
+  final int amountOfStucks;
+  final int amountOfPenalties;
 
   ScoutingData({
     @required this.teamNumber,
     @required this.matchId,
-  }) {
-    autonLine = false;
-    autonLow = false;
-    autonHigh = false;
-    totalAutonAttempted = 0;
-    totalAutonScored = 0;
+    this.autonLine = false,
+    this.autonLow = false,
+    this.autonHigh = false,
+    this.totalAutonAttempted = 0,
+    this.totalAutonScored = 0,
+    this.lowScored = 0,
+    this.outerScored = 0,
+    this.innerScored = 0,
+    this.attemptedLowScored = 0,
+    this.attemptedHighScored = 0,
+    this.colorSpin = false,
+    this.colorSelect = false,
+    this.hanging,
+    this.amountOfStucks = 0,
+    this.amountOfPenalties = 0,
+  });
 
-    lowScored = 0;
-    outerScored = 0;
-    innerScored = 0;
-
-    attemptedLowScored = 0;
-    attemptedHighScored = 0;
-
-    colorSpin = false;
-    colorSelect = false;
-
-    amountOfStucks = 0;
-    amountOfPenalties = 0;
+  static ScoutingData fromJson(
+      {@required Map<String, dynamic> json,
+      @required teamNumber,
+      @required matchId}) {
+    return ScoutingData(
+      teamNumber: teamNumber,
+      matchId: matchId,
+      autonLine: (json["autonLine"] != null) ? json["autonLine"] : false,
+      autonLow: (json["autonLow"] != null) ? json["autonLow"] : false,
+      autonHigh: (json["autonHigh"] != null) ? json["autonHigh"] : false,
+      totalAutonAttempted: (json["totalAutonAttempted"] != null)
+          ? json["totalAutonAttempted"]
+          : 0,
+      totalAutonScored:
+          (json["totalAutonScored"] != null) ? json["totalAutonScored"] : 0,
+      lowScored: (json["lowScored"] != null) ? json["lowScored"] : 0,
+      outerScored: (json["outerScored"] != null) ? json["outerScored"] : 0,
+      innerScored: (json["innerScored"] != null) ? json["innerScored"] : 0,
+      attemptedLowScored:
+          (json["attemptedLowScored"] != null) ? json["attemptedLowScored"] : 0,
+      attemptedHighScored: (json["attemptedHighScored"] != null)
+          ? json["attemptedHighScored"]
+          : 0,
+      colorSpin: (json["colorSpin"] != null) ? json["colorSpin"] : false,
+      colorSelect: (json["colorSelect"] != null) ? json["colorSelect"] : false,
+      hanging: (json["hanging"] != null) ? json["hanging"].toDouble() : null,
+      amountOfStucks:
+          (json["amountOfStucks"] != null) ? json["amountOfStucks"] : 0,
+      amountOfPenalties:
+          (json["amountOfPenalties"] != null) ? json["amountOfPenalties"] : 0,
+    );
   }
 
-  ScoutingData.fromJson({@required Map<String, dynamic> json, @required this.teamNumber, @required this.matchId}) {
-    autonLine = (json["autonLine"] != null) ? json["autonLine"] : false;
-    autonLow = (json["autonLow"] != null) ? json["autonLow"] : false;
-    autonHigh = (json["autonHigh"] != null) ? json["autonHigh"] : false;
-    totalAutonAttempted =
-        (json["totalAutonAttempted"] != null) ? json["totalAutonAttempted"] : 0;
-    totalAutonScored =
-        (json["totalAutonScored"] != null) ? json["totalAutonScored"] : 0;
-    lowScored = (json["lowScored"] != null) ? json["lowScored"] : 0;
-    outerScored = (json["outerScored"] != null) ? json["outerScored"] : 0;
-    innerScored = (json["innerScored"] != null) ? json["innerScored"] : 0;
-    attemptedLowScored =
-        (json["attemptedLowScored"] != null) ? json["attemptedLowScored"] : 0;
-    attemptedHighScored =
-        (json["attemptedHighScored"] != null) ? json["attemptedHighScored"] : 0;
-    colorSpin = (json["colorSpin"] != null) ? json["colorSpin"] : false;
-    colorSelect = (json["colorSelect"] != null) ? json["colorSelect"] : false;
-    hanging = (json["hanging"] != null) ? json["hanging"].toDouble() : null;
-    amountOfStucks =
-        (json["amountOfStucks"] != null) ? json["amountOfStucks"] : 0;
-    amountOfPenalties =
-        (json["amountOfPenalties"] != null) ? json["amountOfPenalties"] : 0;
+  static ScoutingData edit(ScoutingData form, String key, dynamic value) {
+    return ScoutingData(
+      teamNumber: form.teamNumber,
+      matchId: form.matchId,
+      autonLine: (key == "autonLine") ? value : form.autonLine,
+      autonLow: (key == "autonLow") ? value : form.autonLow,
+      autonHigh: (key == "autonHigh") ? value : form.autonHigh,
+      totalAutonAttempted:
+          (key == "totalAutonAttempted") ? value : form.totalAutonAttempted,
+      totalAutonScored:
+          (key == "totalAutonScored") ? value : form.totalAutonScored,
+      lowScored: (key == "lowScored") ? value : form.lowScored,
+      outerScored: (key == "outerScored") ? value : form.outerScored,
+      innerScored: (key == "innerScored") ? value : form.innerScored,
+      attemptedLowScored:
+          (key == "attemptedHighScored") ? value : form.attemptedLowScored,
+      attemptedHighScored:
+          (key == "attemptedHighScored") ? value : form.attemptedHighScored,
+      colorSpin: (key == "colorSpin") ? value : form.colorSpin,
+      colorSelect: (key == "colorSelect") ? value : form.colorSelect,
+      hanging: (key == "hanging") ? value : form.hanging,
+      amountOfStucks: (key == "amountOfStucks") ? value : form.amountOfStucks,
+      amountOfPenalties:
+          (key == "amountOfPenalties") ? value : form.amountOfPenalties,
+    );
   }
+
   Map<String, dynamic> toJson() {
     return {
       "data": {
@@ -95,103 +129,23 @@ class ScoutingData {
     };
   }
 
-  edit(String key, dynamic value) {
-    switch (key) {
-      case "autonLine":
-        autonLine = value;
-        break;
-      case "autonLow":
-        autonLow = value;
-        break;
-      case "autonHigh":
-        autonHigh = value;
-        break;
-      case "totalAutonAttempted":
-        totalAutonAttempted = value;
-        break;
-      case "totalAutonScored":
-        totalAutonScored = value;
-        break;
-      case "lowScored":
-        lowScored = value;
-        break;
-      case "outerScored":
-        outerScored = value;
-        break;
-      case "innerScored":
-        innerScored = value;
-        break;
-      case "attemptedLowScored":
-        attemptedLowScored = value;
-        break;
-      case "attemptedHighScored":
-        attemptedHighScored = value;
-        break;
-      case "colorSpin":
-        colorSpin = value;
-        break;
-      case "colorSelect":
-        colorSelect = value;
-        break;
-      case "hanging":
-        hanging = value;
-        break;
-      case "amountOfStucks":
-        amountOfStucks = value;
-        break;
-      case "amountOfPenalties":
-        amountOfPenalties = value;
-        break;
-    }
-  }
-
-  view(String key) {
-    switch (key) {
-      case "autonLine":
-        return autonLine;
-        break;
-      case "autonLow":
-        return autonLow;
-        break;
-      case "autonHigh":
-        return autonHigh;
-        break;
-      case "totalAutonAttempted":
-        return totalAutonAttempted;
-        break;
-      case "totalAutonScored":
-        return totalAutonScored;
-        break;
-      case "lowScored":
-        return lowScored;
-        break;
-      case "outerScored":
-        return outerScored;
-        break;
-      case "innerScored":
-        return innerScored;
-        break;
-      case "attemptedLowScored":
-        return attemptedLowScored;
-        break;
-      case "attemptedHighScored":
-        return attemptedHighScored;
-        break;
-      case "colorSpin":
-        return colorSpin;
-        break;
-      case "colorSelect":
-        return colorSelect;
-        break;
-      case "hanging":
-        return hanging;
-        break;
-      case "amountOfStucks":
-        return amountOfStucks;
-        break;
-      case "amountOfPenalties":
-        return amountOfPenalties;
-        break;
-    }
-  }
+  @override
+  List<Object> get props => [
+        teamNumber,
+        matchId,
+        autonLine,
+        autonLow,
+        autonHigh,
+        totalAutonAttempted,
+        totalAutonScored,
+        lowScored,
+        outerScored,
+        innerScored,
+        attemptedHighScored,
+        colorSpin,
+        colorSelect,
+        hanging,
+        amountOfStucks,
+        amountOfPenalties
+      ];
 }
