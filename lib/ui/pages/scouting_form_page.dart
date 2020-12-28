@@ -64,7 +64,8 @@ class ScoutingFormPage extends StatelessWidget {
               builder: (context, state) {
                 if (state is ScoutingFormInitial) {
                   BlocProvider.of<ScoutingFormBloc>(context).add(
-                      FormRequested(teamNumber: teamNumber, matchId: matchId));
+                    FormRequested(teamNumber: teamNumber, matchId: matchId),
+                  );
                 }
                 if (state is ScoutingFormLoadSuccess) {
                   return Padding(

@@ -18,42 +18,45 @@ class EventListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<EventBloc>(
-        create: (context) => EventBloc(eventRepository: eventRepository),
-        child: Scaffold(
-            appBar: AppBar(
-              //* appbar is the header
-              title: Text('Event List'),
-              // TODO: Add a settings page
-              // actions: [
-              //   FlatButton(
-              //     child: Icon(Icons.settings),
-              //     onPressed: () =>
-              //         Navigator.push(context, MaterialPageRoute(builder: (context) {
-              //       return SettingsPage();
-              //     })),
-              //   )
-              // ],
-            ),
-            body: _EventCenter(),
-            floatingActionButton:
-                BlocBuilder<EventBloc, EventState>(builder: (context, state) {
-              if (state is EventLoadSuccess) {
-                return FloatingActionButton(
-                    child: Icon(Icons.add),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => AddEventDialog()).then((value) {
-                        if (value == true) {
-                          BlocProvider.of<EventBloc>(context)
-                              .add(EventsRequested());
-                        }
-                      });
+      create: (context) => EventBloc(eventRepository: eventRepository),
+      child: Scaffold(
+        appBar: AppBar(
+          //* appbar is the header
+          title: Text('Event List'),
+          // TODO: Add a settings page
+          // actions: [
+          //   FlatButton(
+          //     child: Icon(Icons.settings),
+          //     onPressed: () =>
+          //         Navigator.push(context, MaterialPageRoute(builder: (context) {
+          //       return SettingsPage();
+          //     })),
+          //   )
+          // ],
+        ),
+        body: _EventCenter(),
+        floatingActionButton: BlocBuilder<EventBloc, EventState>(
+          builder: (context, state) {
+            if (state is EventLoadSuccess) {
+              return FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => AddEventDialog()).then((value) {
+                      if (value == true) {
+                        BlocProvider.of<EventBloc>(context)
+                            .add(EventsRequested());
+                      }
                     });
-              } else {
-                return Container();
-              }
-            })));
+                  });
+            } else {
+              return Container();
+            }
+          },
+        ),
+      ),
+    );
   }
 }
 
@@ -86,26 +89,28 @@ class __EventCenterState extends State<_EventCenter> {
             child: Padding(
               padding: const EdgeInsets.all(5.0),
               child: ListView.separated(
-                  itemCount: events.length,
-                  separatorBuilder: (context, index) =>
-                      Padding(padding: EdgeInsets.all(2.5)),
-                  itemBuilder: (context, index) {
-                    return RaisedButton(
-                        child: ListTile(
-                          title: Text(events[index].name),
-                          trailing: Icon(Icons.arrow_forward),
-                        ),
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute<void>(
-                            // when clicked, it opens the match list and scouting for said item
-                            builder: (BuildContext context) {
-                              return EventPages(
-                                  eventKey: events[index].blueAllianceId,
-                                  eventName: events[index].name);
-                            },
-                          ));
-                        });
-                  }),
+                itemCount: events.length,
+                separatorBuilder: (context, index) =>
+                    Padding(padding: EdgeInsets.all(2.5)),
+                itemBuilder: (context, index) {
+                  return RaisedButton(
+                    child: ListTile(
+                      title: Text(events[index].name),
+                      trailing: Icon(Icons.arrow_forward),
+                    ),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute<void>(
+                        // when clicked, it opens the match list and scouting for said item
+                        builder: (BuildContext context) {
+                          return EventPages(
+                              eventKey: events[index].blueAllianceId,
+                              eventName: events[index].name);
+                        },
+                      ));
+                    },
+                  );
+                },
+              ),
             ),
           );
         } else {

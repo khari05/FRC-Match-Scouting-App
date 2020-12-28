@@ -30,8 +30,10 @@ void main() {
 
     setUp(() {
       eventBloc = EventBloc(
-          eventRepository: EventRepository(
-              eventApiClient: EventApiClient(httpClient: MockClient())));
+        eventRepository: EventRepository(
+          eventApiClient: EventApiClient(httpClient: MockClient()),
+        ),
+      );
     });
 
     test('Initial state is EventInitial', () {

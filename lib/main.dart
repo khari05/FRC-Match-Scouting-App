@@ -20,10 +20,12 @@ class App extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(brightness: Brightness.dark, primarySwatch: Colors.teal),
       home: EventListPage(
-          eventRepository: EventRepository(
-              eventApiClient: EventApiClient(
-                  httpClient: http
-                      .Client()))), // need to put app contents in a subclass in order to be able to call navigator
+        eventRepository: EventRepository(
+          eventApiClient: EventApiClient(
+            httpClient: http.Client(),
+          ),
+        ),
+      ), // need to put app contents in a subclass in order to be able to call navigator
     );
   }
 }

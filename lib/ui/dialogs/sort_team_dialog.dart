@@ -29,26 +29,37 @@ class _SortTeamDialogState extends State<SortTeamDialog> {
             hint: Text("Sort Method"),
             items: [
               DropdownMenuItem(
-                  value: 0, child: Text("Team Number", style: subtitleStyle)),
+                value: 0,
+                child: Text("Team Number", style: subtitleStyle),
+              ),
               DropdownMenuItem(
-                  value: 1, child: Text("Team OPR", style: subtitleStyle)),
+                value: 1,
+                child: Text("Team OPR", style: subtitleStyle),
+              ),
               DropdownMenuItem(
-                  value: 2, child: Text("Team Elo", style: subtitleStyle)),
+                value: 2,
+                child: Text("Team Elo", style: subtitleStyle),
+              ),
               DropdownMenuItem(
-                  value: 3,
-                  child: Text("Average Low Scored", style: subtitleStyle)),
+                value: 3,
+                child: Text("Average Low Scored", style: subtitleStyle),
+              ),
               DropdownMenuItem(
-                  value: 4,
-                  child: Text("Average Outer Scored", style: subtitleStyle)),
+                value: 4,
+                child: Text("Average Outer Scored", style: subtitleStyle),
+              ),
               DropdownMenuItem(
-                  value: 5,
-                  child: Text("Average Inner scored", style: subtitleStyle)),
+                value: 5,
+                child: Text("Average Inner scored", style: subtitleStyle),
+              ),
               DropdownMenuItem(
-                  value: 6,
-                  child: Text("Average Penalites", style: subtitleStyle)),
+                value: 6,
+                child: Text("Average Penalites", style: subtitleStyle),
+              ),
               DropdownMenuItem(
-                  value: 7,
-                  child: Text("Hanging Percentage", style: subtitleStyle)),
+                value: 7,
+                child: Text("Hanging Percentage", style: subtitleStyle),
+              ),
             ],
             onChanged: (value) {
               setState(() {

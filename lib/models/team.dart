@@ -77,7 +77,8 @@ class Team extends Equatable {
 
     List<FlSpot> _percentScored = [];
     _totalAttempted.forEach((element) {
-      _percentScored.add(FlSpot(
+      _percentScored.add(
+        FlSpot(
           element.x,
           element.y == 0
               ? 0
@@ -86,7 +87,9 @@ class Team extends Equatable {
                               .y /
                           element.y) *
                       100)
-                  .toStringAsFixed(2))));
+                  .toStringAsFixed(2)),
+        ),
+      );
     });
 
     return Team(
@@ -151,10 +154,12 @@ class Team extends Equatable {
   static List<FlSpot> _parseChart(List<dynamic> parsedJson) {
     List<FlSpot> data = [];
     parsedJson.forEach((element) {
-      data.add(FlSpot(
-        element["matchNumber"].toDouble(),
-        element["data"].toDouble(),
-      ));
+      data.add(
+        FlSpot(
+          element["matchNumber"].toDouble(),
+          element["data"].toDouble(),
+        ),
+      );
     });
     return data;
   }

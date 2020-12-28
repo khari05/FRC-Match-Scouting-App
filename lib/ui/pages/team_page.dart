@@ -18,22 +18,23 @@ class TeamLoader extends StatelessWidget {
     Future<http.Response> _teamData =
         http.get("$baseUrl/team/$teamNumber/$eventKey");
     return FutureBuilder(
-        future: _teamData,
-        builder: (BuildContext context, AsyncSnapshot<http.Response> response) {
-          if (response.hasData && response.data.body != "[]") {
-            return TeamPage(
-                team: Team.fromJson(jsonDecode(response.data.body)));
-          } else if (response.hasError) {
-            print("response has an error: ${response.error}");
-            return Container();
-          } else {
-            print("error: no data");
-            return Scaffold(
-                body: Center(
+      future: _teamData,
+      builder: (BuildContext context, AsyncSnapshot<http.Response> response) {
+        if (response.hasData && response.data.body != "[]") {
+          return TeamPage(team: Team.fromJson(jsonDecode(response.data.body)));
+        } else if (response.hasError) {
+          print("response has an error: ${response.error}");
+          return Container();
+        } else {
+          print("error: no data");
+          return Scaffold(
+            body: Center(
               child: CircularProgressIndicator(),
-            ));
-          }
-        });
+            ),
+          );
+        }
+      },
+    );
   }
 }
 
@@ -57,9 +58,14 @@ class TeamPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("OPR", style: Theme.of(context).textTheme.subtitle1),
-                  Text(team.opr.toString(),
-                      style: Theme.of(context).textTheme.subtitle1)
+                  Text(
+                    "OPR",
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  Text(
+                    team.opr.toString(),
+                    style: Theme.of(context).textTheme.subtitle1,
+                  )
                 ],
               ),
               Divider(
@@ -68,9 +74,14 @@ class TeamPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Elo", style: Theme.of(context).textTheme.subtitle1),
-                  Text(team.elo.toString(),
-                      style: Theme.of(context).textTheme.subtitle1),
+                  Text(
+                    "Elo",
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  Text(
+                    team.elo.toString(),
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
                 ],
               ),
               RaisedButton(
@@ -79,19 +90,25 @@ class TeamPage extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                          "Percentage of matches with hanging: ${team.avgHang}%",
-                          style: Theme.of(context).textTheme.subtitle1),
+                        "Percentage of matches with hanging: ${team.avgHang}%",
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
                     ),
                     Icon(Icons.arrow_forward)
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push((context),
-                      MaterialPageRoute(builder: (context) {
-                    return TeamChartPage(
-                        data: team.hanging,
-                        title: "Hanging from team #${team.teamNumber}");
-                  }));
+                  Navigator.push(
+                    (context),
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return TeamChartPage(
+                          data: team.hanging,
+                          title: "Hanging from team #${team.teamNumber}",
+                        );
+                      },
+                    ),
+                  );
                 },
               ),
               RaisedButton(
@@ -99,19 +116,25 @@ class TeamPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
-                      child: Text("Average penalites per match: ${team.avgPen}",
-                          style: Theme.of(context).textTheme.subtitle1),
+                      child: Text(
+                        "Average penalites per match: ${team.avgPen}",
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
                     ),
-                    Icon(Icons.arrow_forward)
+                    Icon(Icons.arrow_forward),
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push((context),
-                      MaterialPageRoute(builder: (context) {
-                    return TeamChartPage(
-                        data: team.penalties,
-                        title: "Penalties from team #${team.teamNumber}");
-                  }));
+                  Navigator.push(
+                    (context),
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return TeamChartPage(
+                            data: team.penalties,
+                            title: "Penalties from team #${team.teamNumber}");
+                      },
+                    ),
+                  );
                 },
               ),
               RaisedButton(
@@ -122,18 +145,23 @@ class TeamPage extends StatelessWidget {
                       child: Text("Average Percent Scored: ${team.avgPercent}%",
                           style: Theme.of(context).textTheme.subtitle1),
                     ),
-                    Icon(Icons.arrow_forward)
+                    Icon(Icons.arrow_forward),
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push((context),
-                      MaterialPageRoute(builder: (context) {
-                    return TeamChartPage(
-                        data: team.percentScored,
-                        title: "Percent scored from team #${team.teamNumber}",
-                        maxY: 100,
-                        horizontalInterval: 10,);
-                  }));
+                  Navigator.push(
+                    (context),
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return TeamChartPage(
+                          data: team.percentScored,
+                          title: "Percent scored from team #${team.teamNumber}",
+                          maxY: 100,
+                          horizontalInterval: 10,
+                        );
+                      },
+                    ),
+                  );
                 },
               ),
               RaisedButton(
@@ -144,16 +172,21 @@ class TeamPage extends StatelessWidget {
                       child: Text("Average Low Scored: ${team.avgLow}",
                           style: Theme.of(context).textTheme.subtitle1),
                     ),
-                    Icon(Icons.arrow_forward)
+                    Icon(Icons.arrow_forward),
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push((context),
-                      MaterialPageRoute(builder: (context) {
-                    return TeamChartPage(
-                        data: team.lowScored,
-                        title: "Lower scoring from team #${team.teamNumber}");
-                  }));
+                  Navigator.push(
+                    (context),
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return TeamChartPage(
+                          data: team.lowScored,
+                          title: "Lower scoring from team #${team.teamNumber}",
+                        );
+                      },
+                    ),
+                  );
                 },
               ),
               RaisedButton(
@@ -164,16 +197,21 @@ class TeamPage extends StatelessWidget {
                       child: Text("Average Outer Scored: ${team.avgOuter}",
                           style: Theme.of(context).textTheme.subtitle1),
                     ),
-                    Icon(Icons.arrow_forward)
+                    Icon(Icons.arrow_forward),
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push((context),
-                      MaterialPageRoute(builder: (context) {
-                    return TeamChartPage(
-                        data: team.outerScored,
-                        title: "Outer scoring from team #${team.teamNumber}");
-                  }));
+                  Navigator.push(
+                    (context),
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return TeamChartPage(
+                          data: team.outerScored,
+                          title: "Outer scoring from team #${team.teamNumber}",
+                        );
+                      },
+                    ),
+                  );
                 },
               ),
               RaisedButton(
@@ -181,19 +219,26 @@ class TeamPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
-                      child: Text("Average Inner Scored: ${team.avgInner}",
-                          style: Theme.of(context).textTheme.subtitle1),
+                      child: Text(
+                        "Average Inner Scored: ${team.avgInner}",
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
                     ),
                     Icon(Icons.arrow_forward)
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push((context),
-                      MaterialPageRoute(builder: (context) {
-                    return TeamChartPage(
-                        data: team.innerScored,
-                        title: "Inner scoring from team #${team.teamNumber}");
-                  }));
+                  Navigator.push(
+                    (context),
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return TeamChartPage(
+                          data: team.innerScored,
+                          title: "Inner scoring from team #${team.teamNumber}",
+                        );
+                      },
+                    ),
+                  );
                 },
               ),
               TextField(
