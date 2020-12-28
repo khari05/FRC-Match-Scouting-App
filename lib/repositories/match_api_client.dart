@@ -8,9 +8,7 @@ import 'package:http/http.dart' as http;
 class MatchApiClient {
   final http.Client httpClient;
 
-  MatchApiClient({
-    @required this.httpClient,
-  }) : assert(httpClient != null);
+  MatchApiClient({@required this.httpClient}) : assert(httpClient != null);
 
   Future<List<MatchObject>> fetchMatchList(String blueAllianceId) async {
     final http.Response matchResponse =

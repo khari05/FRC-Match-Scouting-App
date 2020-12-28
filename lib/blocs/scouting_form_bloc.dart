@@ -9,11 +9,11 @@ class ScoutingFormBloc extends Bloc<ScoutingFormEvent, ScoutingFormState> {
   final int teamNumber;
   final int matchId;
 
-  ScoutingFormBloc(
-      {@required this.scoutingDataRepository,
-      @required this.teamNumber,
-      @required this.matchId})
-      : assert(scoutingDataRepository != null),
+  ScoutingFormBloc({
+    @required this.scoutingDataRepository,
+    @required this.teamNumber,
+    @required this.matchId,
+  })  : assert(scoutingDataRepository != null),
         super(ScoutingFormInitial());
 
   @override

@@ -111,12 +111,12 @@ class TeamButton extends StatelessWidget {
   final int matchId;
   final String eventKey;
 
-  const TeamButton(
-      {Key key,
-      @required this.teamNumber,
-      @required this.matchId,
-      @required this.eventKey})
-      : super(key: key);
+  const TeamButton({
+    Key key,
+    @required this.teamNumber,
+    @required this.matchId,
+    @required this.eventKey,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

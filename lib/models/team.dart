@@ -33,31 +33,32 @@ class Team extends Equatable {
   final List<FlSpot> penalties;
   final List<FlSpot> hanging;
 
-  Team(
-      {this.teamNumber,
-      this.teamName,
-      this.eventKey,
-      this.strengths,
-      this.flaws,
-      this.strategies,
-      this.opr,
-      this.elo,
-      this.avgLow,
-      this.avgOuter,
-      this.avgInner,
-      this.avgTotal,
-      this.avgAttempted,
-      this.avgPercent,
-      this.lowScored,
-      this.outerScored,
-      this.innerScored,
-      this.totalScored,
-      this.totalAttempted,
-      this.percentScored,
-      this.avgPen,
-      this.avgHang,
-      this.penalties,
-      this.hanging});
+  Team({
+    this.teamNumber,
+    this.teamName,
+    this.eventKey,
+    this.strengths,
+    this.flaws,
+    this.strategies,
+    this.opr,
+    this.elo,
+    this.avgLow,
+    this.avgOuter,
+    this.avgInner,
+    this.avgTotal,
+    this.avgAttempted,
+    this.avgPercent,
+    this.lowScored,
+    this.outerScored,
+    this.innerScored,
+    this.totalScored,
+    this.totalAttempted,
+    this.percentScored,
+    this.avgPen,
+    this.avgHang,
+    this.penalties,
+    this.hanging,
+  });
 
   static Team fromJson(Map<String, dynamic> json) {
     final List<FlSpot> _emptyChart = [FlSpot(1, 0)];

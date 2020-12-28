@@ -10,9 +10,7 @@ import 'package:meta/meta.dart';
 class EventApiClient {
   final http.Client httpClient;
 
-  EventApiClient({
-    @required this.httpClient,
-  }) : assert(httpClient != null);
+  EventApiClient({@required this.httpClient}) : assert(httpClient != null);
 
   Future<List<Event>> fetchEventList() async {
     final response = await httpClient.get("$baseUrl/events");

@@ -40,20 +40,20 @@ void main() {
       expect(true, eventBloc.state is EventInitial);
     });
 
-    blocTest("EventBloc parses the http.Response when events are requested",
-        build: () => eventBloc,
-        act: (EventBloc bloc) {
-          bloc.add(EventsRequested());
-          print(bloc.state);
-        },
-        expect: [
-          EventLoadInProgress(),
-          EventLoadSuccess(events: [
-            Event(
-                id: 1,
-                name: "2020 Dalton Scouting",
-                blueAllianceId: "2020gadal")
-          ])
-        ]);
+    blocTest(
+      "EventBloc parses the http.Response when events are requested",
+      build: () => eventBloc,
+      act: (EventBloc bloc) {
+        bloc.add(EventsRequested());
+        print(bloc.state);
+      },
+      expect: [
+        EventLoadInProgress(),
+        EventLoadSuccess(events: [
+          Event(
+              id: 1, name: "2020 Dalton Scouting", blueAllianceId: "2020gadal")
+        ]),
+      ],
+    );
   });
 }

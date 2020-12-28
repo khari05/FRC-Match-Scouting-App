@@ -288,9 +288,10 @@ class TeamPage extends StatelessWidget {
         child: Icon(Icons.save),
         onPressed: () {
           http.post(
-              "$baseUrl/team/${updatedTeam.teamNumber}/${updatedTeam.eventKey}",
-              body: jsonEncode(updatedTeam.toJson()),
-              headers: {"Content-Type": "application/json"});
+            "$baseUrl/team/${updatedTeam.teamNumber}/${updatedTeam.eventKey}",
+            body: jsonEncode(updatedTeam.toJson()),
+            headers: {"Content-Type": "application/json"},
+          );
           Navigator.pop(context, true);
         },
       ),

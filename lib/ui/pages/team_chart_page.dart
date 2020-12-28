@@ -7,13 +7,13 @@ class TeamChartPage extends StatelessWidget {
   final double maxY;
   final double horizontalInterval;
 
-  const TeamChartPage(
-      {Key key,
-      @required this.data,
-      @required this.title,
-      this.maxY,
-      this.horizontalInterval})
-      : super(key: key);
+  const TeamChartPage({
+    Key key,
+    @required this.data,
+    @required this.title,
+    this.maxY,
+    this.horizontalInterval,
+  }) : super(key: key);
 
   static const List<Color> gradientColors = [
     Colors.lightBlueAccent,

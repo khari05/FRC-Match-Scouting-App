@@ -11,11 +11,11 @@ class BottomNavigationBloc
   final String blueAllianceId;
   int currentIndex = 0;
 
-  BottomNavigationBloc(
-      {@required this.matchRepository,
-      @required this.teamRepository,
-      @required this.blueAllianceId})
-      : assert(matchRepository != null),
+  BottomNavigationBloc({
+    @required this.matchRepository,
+    @required this.teamRepository,
+    @required this.blueAllianceId,
+  }) : assert(matchRepository != null),
         assert(teamRepository != null),
         super(BottomNavigationInitial());
 
@@ -42,7 +42,10 @@ class BottomNavigationBloc
           if (teams.length == 0) {
             yield TeamPageEmpty();
           } else {
-            yield TeamPageLoaded(teams: teams, ascending: event.ascending ?? true, sortMethod: event.sortMethod ?? 0);
+            yield TeamPageLoaded(
+                teams: teams,
+                ascending: event.ascending ?? true,
+                sortMethod: event.sortMethod ?? 0);
           }
         }
       } catch (err) {

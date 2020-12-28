@@ -12,15 +12,16 @@ class MatchObject extends Equatable {
   final int blue2;
   final int blue3;
 
-  MatchObject(
-      {this.id,
-      this.matchNumber,
-      this.red1,
-      this.red2,
-      this.red3,
-      this.blue1,
-      this.blue2,
-      this.blue3});
+  MatchObject({
+    this.id,
+    this.matchNumber,
+    this.red1,
+    this.red2,
+    this.red3,
+    this.blue1,
+    this.blue2,
+    this.blue3,
+  });
 
   List<Object> get props =>
       [id, matchNumber, red1, red2, red3, blue1, blue2, blue3];

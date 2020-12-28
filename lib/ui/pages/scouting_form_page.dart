@@ -17,12 +17,12 @@ class ScoutingFormPage extends StatelessWidget {
   final int matchId;
   final String eventKey;
 
-  const ScoutingFormPage(
-      {Key key,
-      @required this.teamNumber,
-      @required this.matchId,
-      @required this.eventKey})
-      : super(key: key);
+  const ScoutingFormPage({
+    Key key,
+    @required this.teamNumber,
+    @required this.matchId,
+    @required this.eventKey,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -210,9 +210,10 @@ class ScoutingFormPage extends StatelessWidget {
                   child: Icon(Icons.save),
                   onPressed: () {
                     http.post(
-                        "$baseUrl/scout/${state.form.teamNumber}/${state.form.matchId}",
-                        body: jsonEncode(state.form.toJson()),
-                        headers: {"Content-Type": "application/json"});
+                      "$baseUrl/scout/${state.form.teamNumber}/${state.form.matchId}",
+                      body: jsonEncode(state.form.toJson()),
+                      headers: {"Content-Type": "application/json"},
+                    );
                     Navigator.pop(context);
                   },
                 );
