@@ -1,10 +1,9 @@
-name: CI
+name: Main Workflow
 
 on:
   push:
     branches:
       - master
-      - convert-to-bloc
   pull_request:
     branches:
       - master

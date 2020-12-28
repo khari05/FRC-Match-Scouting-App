@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frc_scouting/blocs/blocs.dart';
 import 'package:frc_scouting/main.dart';
 import 'package:frc_scouting/models/models.dart';
-import 'package:frc_scouting/widgets/scoutingform/ScoutingView.dart';
+import 'package:frc_scouting/ui/pages/scouting_form_page.dart';
 import 'package:http/http.dart' as http;
 
 class MatchReqPage extends StatelessWidget {
@@ -15,12 +15,13 @@ class MatchReqPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: RaisedButton(
-          child: Text("Pull Matches From TBA"),
-          onPressed: () {
-            http.put("$baseUrl/pullmatches/$eventKey");
-            BlocProvider.of<BottomNavigationBloc>(context)
-                .add(PageSwitched(index: 0));
-          }),
+        child: Text("Pull Matches From TBA"),
+        onPressed: () {
+          http.put("$baseUrl/pullmatches/$eventKey");
+          BlocProvider.of<BottomNavigationBloc>(context)
+              .add(PageSwitched(index: 0));
+        },
+      ),
     );
   }
 }
@@ -36,61 +37,72 @@ class MatchListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: matches.length,
-        itemBuilder: (context, index) {
-          return Container(
-              padding: EdgeInsets.all(5),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text(
-                      "Qual " + matchNumber(matches[index].matchNumber),
-                      textAlign: TextAlign.center,
-                    ),
-                    Column(
+      itemCount: matches.length,
+      itemBuilder: (context, index) {
+        return Container(
+          padding: EdgeInsets.all(5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text(
+                "Qual " + matchNumber(matches[index].matchNumber),
+                textAlign: TextAlign.center,
+              ),
+              Column(
+                children: <Widget>[
+                  Container(
+                    color: Colors.red,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Container(
-                            color: Colors.red,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                TeamButton(
-                                    teamNumber: matches[index].red1,
-                                    matchId: matches[index].id,
-                                    eventKey: eventKey),
-                                TeamButton(
-                                    teamNumber: matches[index].red2,
-                                    matchId: matches[index].id,
-                                    eventKey: eventKey),
-                                TeamButton(
-                                    teamNumber: matches[index].red3,
-                                    matchId: matches[index].id,
-                                    eventKey: eventKey)
-                              ],
-                            )),
-                        Container(
-                            color: Colors.blueAccent,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                TeamButton(
-                                    teamNumber: matches[index].blue1,
-                                    matchId: matches[index].id,
-                                    eventKey: eventKey),
-                                TeamButton(
-                                    teamNumber: matches[index].blue2,
-                                    matchId: matches[index].id,
-                                    eventKey: eventKey),
-                                TeamButton(
-                                    teamNumber: matches[index].blue3,
-                                    matchId: matches[index].id,
-                                    eventKey: eventKey)
-                              ],
-                            ))
+                        TeamButton(
+                          teamNumber: matches[index].red1,
+                          matchId: matches[index].id,
+                          eventKey: eventKey,
+                        ),
+                        TeamButton(
+                          teamNumber: matches[index].red2,
+                          matchId: matches[index].id,
+                          eventKey: eventKey,
+                        ),
+                        TeamButton(
+                          teamNumber: matches[index].red3,
+                          matchId: matches[index].id,
+                          eventKey: eventKey,
+                        )
                       ],
-                    )
-                  ]));
-        });
+                    ),
+                  ),
+                  Container(
+                    color: Colors.blueAccent,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        TeamButton(
+                          teamNumber: matches[index].blue1,
+                          matchId: matches[index].id,
+                          eventKey: eventKey,
+                        ),
+                        TeamButton(
+                          teamNumber: matches[index].blue2,
+                          matchId: matches[index].id,
+                          eventKey: eventKey,
+                        ),
+                        TeamButton(
+                          teamNumber: matches[index].blue3,
+                          matchId: matches[index].id,
+                          eventKey: eventKey,
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -113,8 +125,11 @@ class TeamButton extends StatelessWidget {
       onPressed: () {
         Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) {
-          return ScoutingView(
-              teamNumber: teamNumber, matchId: matchId, eventKey: eventKey);
+          return ScoutingFormPage(
+            teamNumber: teamNumber,
+            matchId: matchId,
+            eventKey: eventKey,
+          );
         }));
       },
     );

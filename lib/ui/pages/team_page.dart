@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:frc_scouting/main.dart';
-import 'package:frc_scouting/models/team.dart';
+import 'package:frc_scouting/models/models.dart';
 import 'package:frc_scouting/ui/pages/team_chart_page.dart';
 import 'package:http/http.dart' as http;
 

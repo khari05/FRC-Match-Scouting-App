@@ -50,6 +50,7 @@ class BottomNavigationBloc
         print(err);
       }
     }
+
     if (event is SortChanged) {
       List<Team> teams = event.teams;
       final int sortMethod = event.sortMethod;

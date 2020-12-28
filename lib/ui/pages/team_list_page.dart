@@ -15,12 +15,13 @@ class TeamReqPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
-        child: Text("Pull Teams From TBA"),
-        onPressed: () {
-          http.put("$baseUrl/pullteams/$eventKey");
-          BlocProvider.of<BottomNavigationBloc>(context)
-              .add(PageSwitched(index: 1));
-        });
+      child: Text("Pull Teams From TBA"),
+      onPressed: () {
+        http.put("$baseUrl/pullteams/$eventKey");
+        BlocProvider.of<BottomNavigationBloc>(context)
+            .add(PageSwitched(index: 1));
+      },
+    );
   }
 }
 
@@ -56,73 +57,98 @@ class TeamListPage extends StatelessWidget {
                     "Team",
                     style: Theme.of(context).textTheme.headline6,
                   ),
-                  Row(children: [
-                    IconButton(
-                        icon: Icon(ascending
-                            ? Icons.arrow_upward
-                            : Icons.arrow_downward),
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          ascending ? Icons.arrow_upward : Icons.arrow_downward,
+                        ),
                         onPressed: () {
                           BlocProvider.of<BottomNavigationBloc>(context).add(
-                              SortChanged(teams,
-                                  sortMethod: sortMethod,
-                                  ascending: !ascending));
-                        }),
-                    IconButton(
+                            SortChanged(
+                              teams,
+                              sortMethod: sortMethod,
+                              ascending: !ascending,
+                            ),
+                          );
+                        },
+                      ),
+                      IconButton(
                         icon: Icon(Icons.sort),
                         onPressed: () {
                           showDialog(
-                              context: (context),
-                              child: SortTeamDialog(
-                                sortMethod: sortMethod,
-                                ascending: ascending,
-                              )).then((value) {
-                            if (value != null) {
-                              BlocProvider.of<BottomNavigationBloc>(context)
-                                  .add(SortChanged(teams,
-                                      sortMethod: value["sortMethod"],
-                                      ascending: value["ascending"]));
-                            }
-                          });
-                        }),
-                  ]),
+                            context: (context),
+                            child: SortTeamDialog(
+                              sortMethod: sortMethod,
+                              ascending: ascending,
+                            ),
+                          ).then(
+                            (value) {
+                              if (value != null) {
+                                BlocProvider.of<BottomNavigationBloc>(context)
+                                    .add(
+                                  SortChanged(
+                                    teams,
+                                    sortMethod: value["sortMethod"],
+                                    ascending: value["ascending"],
+                                  ),
+                                );
+                              }
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
           );
         } else {
           return FlatButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        teams[index - 1].teamName,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      Text(
-                        teams[index - 1].teamNumber.toString(),
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
-                    ],
-                  ),
-                  (sortMethod != 0)
-                      ? Text(teams[index - 1].getValue(sortMethod).toString())
-                      : Container()
-                ],
-              ),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute<void>(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      teams[index - 1].teamName,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    Text(
+                      teams[index - 1].teamNumber.toString(),
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                  ],
+                ),
+                (sortMethod != 0)
+                    ? Text(teams[index - 1].getValue(sortMethod).toString())
+                    : Container()
+              ],
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
                   // when clicked, it opens the match list and scouting for said item
                   builder: (BuildContext context) {
                     return TeamPage(team: teams[index - 1]);
                   },
-                )).then((value) {
-                  BlocProvider.of<BottomNavigationBloc>(context)
-                      .add(PageSwitched(index: 1, sortMethod: sortMethod, ascending: ascending));
-                });
-              });
+                ),
+              ).then(
+                (value) {
+                  BlocProvider.of<BottomNavigationBloc>(context).add(
+                    PageSwitched(
+                      index: 1,
+                      sortMethod: sortMethod,
+                      ascending: ascending,
+                    ),
+                  );
+                },
+              );
+            },
+          );
         }
       },
     );

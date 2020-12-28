@@ -20,80 +20,90 @@ class EventPages extends StatelessWidget {
     return BlocProvider(
       create: (context) => BottomNavigationBloc(
         matchRepository: MatchRepository(
-            matchApiClient: MatchApiClient(httpClient: http.Client())),
+          matchApiClient: MatchApiClient(httpClient: http.Client()),
+        ),
         teamRepository: TeamRepository(
-            teamApiClient: TeamApiClient(httpClient: http.Client())),
+          teamApiClient: TeamApiClient(httpClient: http.Client()),
+        ),
         blueAllianceId: eventKey,
       ),
       child: Scaffold(
-          appBar: AppBar(
-            title: Text(eventName),
-            actions: [
-              BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
-                  builder: (context, state) {
-                if (state is TeamPageLoaded) {
-                  return IconButton(
-                    icon: Icon(Icons.refresh),
-                    onPressed: () {
-                      http.put("$baseUrl/updateteams/$eventKey");
-                      BlocProvider.of<BottomNavigationBloc>(context)
-                          .add(PageSwitched(index: 1));
-                    },
-                  );
-                } else {
-                  return Container();
-                }
-              })
-            ],
-          ),
-          body: Center(
-            child: Builder(builder: (context) {
-              BlocProvider.of<BottomNavigationBloc>(context)
-                  .add(PageSwitched(index: 0));
-              return BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
-                  builder: (context, state) {
-                if (state is PageLoading || state is PageLoadError) {
-                  return CircularProgressIndicator();
-                }
-                if (state is MatchPageLoaded) {
-                  return MatchListPage(
-                      eventKey: eventKey, matches: state.matches);
-                }
-                if (state is MatchPageEmpty) {
-                  return MatchReqPage(eventKey: eventKey);
-                }
-                if (state is TeamPageLoaded) {
-                  return TeamListPage(teams: state.teams, sortMethod: state.sortMethod, ascending: state.ascending);
-                }
-                if (state is TeamPageEmpty) {
-                  return TeamReqPage(
-                    eventKey: eventKey,
-                  );
-                } else {
-                  return Container();
-                }
-              });
-            }),
-          ),
-          bottomNavigationBar: Builder(builder: (context) {
+        appBar: AppBar(
+          title: Text(eventName),
+          actions: [
+            BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
+                builder: (context, state) {
+              if (state is TeamPageLoaded) {
+                return IconButton(
+                  icon: Icon(Icons.refresh),
+                  onPressed: () {
+                    http.put("$baseUrl/updateteams/$eventKey");
+                    BlocProvider.of<BottomNavigationBloc>(context)
+                        .add(PageSwitched(index: 1));
+                  },
+                );
+              } else {
+                return Container();
+              }
+            })
+          ],
+        ),
+        body: Center(
+          child: Builder(builder: (context) {
+            BlocProvider.of<BottomNavigationBloc>(context)
+                .add(PageSwitched(index: 0));
             return BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
                 builder: (context, state) {
-              return BottomNavigationBar(
+              if (state is PageLoading || state is PageLoadError) {
+                return CircularProgressIndicator();
+              }
+              if (state is MatchPageLoaded) {
+                return MatchListPage(
+                    eventKey: eventKey, matches: state.matches);
+              }
+              if (state is MatchPageEmpty) {
+                return MatchReqPage(eventKey: eventKey);
+              }
+              if (state is TeamPageLoaded) {
+                return TeamListPage(
+                    teams: state.teams,
+                    sortMethod: state.sortMethod,
+                    ascending: state.ascending);
+              }
+              if (state is TeamPageEmpty) {
+                return TeamReqPage(
+                  eventKey: eventKey,
+                );
+              } else {
+                return Container();
+              }
+            });
+          }),
+        ),
+        bottomNavigationBar: Builder(
+          builder: (context) {
+            return BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
+              builder: (context, state) {
+                return BottomNavigationBar(
                   backgroundColor: Theme.of(context).bottomAppBarColor,
                   currentIndex: BlocProvider.of<BottomNavigationBloc>(context)
                       .currentIndex,
                   items: <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
-                        icon: Icon(Icons.trending_up), title: Text("Matches")),
+                        icon: Icon(Icons.trending_up), label: "Matches"),
                     BottomNavigationBarItem(
-                        icon: Icon(Icons.people), title: Text("Teams")),
+                        icon: Icon(Icons.people), label: "Teams"),
                   ],
                   onTap: (newValue) {
                     BlocProvider.of<BottomNavigationBloc>(context)
                         .add(PageSwitched(index: newValue));
-                  });
-            });
-          })),
+                  },
+                );
+              },
+            );
+          },
+        ),
+      ),
     );
   }
 }

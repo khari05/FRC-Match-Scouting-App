@@ -10,6 +10,7 @@ class EventBloc extends Bloc<EventsEvent, EventState> {
   EventBloc({@required this.eventRepository})
       : assert(eventRepository != null),
         super(EventInitial());
+
   @override
   Stream<EventState> mapEventToState(EventsEvent event) async* {
     if (event is EventsRequested) {

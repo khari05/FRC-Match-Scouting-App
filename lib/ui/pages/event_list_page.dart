@@ -76,14 +76,6 @@ class __EventCenterState extends State<_EventCenter> {
     BlocProvider.of<EventBloc>(context).add(EventsRequested());
     return Center(
       child: BlocBuilder<EventBloc, EventState>(builder: (context, state) {
-        if (state is EventInitial) {
-          return Container();
-        }
-        if (state is EventLoadInProgress) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
         if (state is EventLoadSuccess) {
           final events = state.events;
           return RefreshIndicator(
@@ -116,14 +108,8 @@ class __EventCenterState extends State<_EventCenter> {
                   }),
             ),
           );
-        }
-        if (state is EventLoadFailure) {
-          return Text(
-            "Something went wrong!",
-            style: TextStyle(color: Colors.red),
-          );
         } else {
-          return Container();
+          return CircularProgressIndicator();
         }
       }),
     );

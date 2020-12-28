@@ -79,77 +79,82 @@ class Team extends Equatable {
     _totalAttempted.forEach((element) {
       _percentScored.add(FlSpot(
           element.x,
-          element.y == 0 ? 0 : double.parse(((_totalScored
-                          .firstWhere((FlSpot item) => item.x == element.x)
-                          .y /
-                      element.y) *
-                  100)
-              .toStringAsFixed(2))));
+          element.y == 0
+              ? 0
+              : double.parse(((_totalScored
+                              .firstWhere((FlSpot item) => item.x == element.x)
+                              .y /
+                          element.y) *
+                      100)
+                  .toStringAsFixed(2))));
     });
 
     return Team(
-        teamNumber: json["team_number"],
-        teamName: json["team_name"],
-        eventKey: json["blue_alliance_id"],
-        strengths: (json["data"] != null && json["data"]["strengths"] != null)
-            ? json["data"]["strengths"]
-            : null,
-        flaws: (json["data"] != null && json["data"]["flaws"] != null)
-            ? json["data"]["flaws"]
-            : null,
-        strategies: (json["data"] != null && json["data"]["strategies"] != null)
-            ? json["data"]["strategies"]
-            : null,
-        opr: (json["data"] != null && json["data"]["opr"] != null)
-            ? json["data"]["opr"].toDouble()
-            : 0.toDouble(),
-        elo: (json["data"] != null && json["data"]["elo"] != null)
-            ? json["data"]["elo"].toDouble()
-            : 0.toDouble(),
-        avgLow: (json["data"] != null)
-            ? json["data"]["avgLow"].toDouble()
-            : 0.toDouble(),
-        avgOuter:
-            (json["data"] != null) ? json["data"]["avgOuter"].toDouble() : 0,
-        avgInner: (json["data"] != null)
-            ? json["data"]["avgInner"].toDouble()
-            : 0.toDouble(),
-        avgTotal: _avgTotal,
-        avgAttempted: _avgAttempted,
-        lowScored: (json["data"] != null)
-            ? _parseChart(json["data"]["lowScored"])
-            : _emptyChart,
-        outerScored: (json["data"] != null)
-            ? _parseChart(json["data"]["outerScored"])
-            : _emptyChart,
-        innerScored: (json["data"] != null)
-            ? _parseChart(json["data"]["innerScored"])
-            : _emptyChart,
-        totalScored: _totalScored,
-        totalAttempted: _totalAttempted,
-        avgPen: (json["data"] != null && json["data"]["avgPen"] != null)
-            ? json["data"]["avgPen"].toDouble()
-            : 0.toDouble(),
-        avgHang: (json["data"] != null && json["data"]["avgHang"] != null)
-            ? json["data"]["avgHang"].round()
-            : 0,
-        penalties: (json["data"] != null)
-            ? _parseChart(json["data"]["penalties"])
-            : _emptyChart,
-        hanging: (json["data"] != null)
-            ? _parseChart(json["data"]["hanging"])
-            : _emptyChart,
-        avgPercent: (_avgTotal != 0.toDouble())
-            ? (_avgTotal / _avgAttempted * 100).round()
-            : 0,
-        percentScored: _percentScored);
+      teamNumber: json["team_number"],
+      teamName: json["team_name"],
+      eventKey: json["blue_alliance_id"],
+      strengths: (json["data"] != null && json["data"]["strengths"] != null)
+          ? json["data"]["strengths"]
+          : null,
+      flaws: (json["data"] != null && json["data"]["flaws"] != null)
+          ? json["data"]["flaws"]
+          : null,
+      strategies: (json["data"] != null && json["data"]["strategies"] != null)
+          ? json["data"]["strategies"]
+          : null,
+      opr: (json["data"] != null && json["data"]["opr"] != null)
+          ? json["data"]["opr"].toDouble()
+          : 0.toDouble(),
+      elo: (json["data"] != null && json["data"]["elo"] != null)
+          ? json["data"]["elo"].toDouble()
+          : 0.toDouble(),
+      avgLow: (json["data"] != null)
+          ? json["data"]["avgLow"].toDouble()
+          : 0.toDouble(),
+      avgOuter:
+          (json["data"] != null) ? json["data"]["avgOuter"].toDouble() : 0,
+      avgInner: (json["data"] != null)
+          ? json["data"]["avgInner"].toDouble()
+          : 0.toDouble(),
+      avgTotal: _avgTotal,
+      avgAttempted: _avgAttempted,
+      lowScored: (json["data"] != null)
+          ? _parseChart(json["data"]["lowScored"])
+          : _emptyChart,
+      outerScored: (json["data"] != null)
+          ? _parseChart(json["data"]["outerScored"])
+          : _emptyChart,
+      innerScored: (json["data"] != null)
+          ? _parseChart(json["data"]["innerScored"])
+          : _emptyChart,
+      totalScored: _totalScored,
+      totalAttempted: _totalAttempted,
+      avgPen: (json["data"] != null && json["data"]["avgPen"] != null)
+          ? json["data"]["avgPen"].toDouble()
+          : 0.toDouble(),
+      avgHang: (json["data"] != null && json["data"]["avgHang"] != null)
+          ? json["data"]["avgHang"].round()
+          : 0,
+      penalties: (json["data"] != null)
+          ? _parseChart(json["data"]["penalties"])
+          : _emptyChart,
+      hanging: (json["data"] != null)
+          ? _parseChart(json["data"]["hanging"])
+          : _emptyChart,
+      avgPercent: (_avgTotal != 0.toDouble())
+          ? (_avgTotal / _avgAttempted * 100).round()
+          : 0,
+      percentScored: _percentScored,
+    );
   }
 
   static List<FlSpot> _parseChart(List<dynamic> parsedJson) {
     List<FlSpot> data = [];
     parsedJson.forEach((element) {
       data.add(FlSpot(
-          element["matchNumber"].toDouble(), element["data"].toDouble()));
+        element["matchNumber"].toDouble(),
+        element["data"].toDouble(),
+      ));
     });
     return data;
   }
