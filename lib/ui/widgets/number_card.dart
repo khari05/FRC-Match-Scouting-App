@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frc_scouting/blocs/blocs.dart';
 import 'package:frc_scouting/models/models.dart';
 import 'package:numberpicker/numberpicker.dart';
 
@@ -19,14 +20,15 @@ class NumberCard extends StatelessWidget {
           children: <Widget>[
             Flexible(child: Text(text)),
             NumberPicker.integer(
-                minValue: 0,
-                maxValue: 60,
-                initialValue: index,
-                onChanged: (newValue) {
-                  // TODO update state
-                  // BlocProvider.of<ScoutingFormBloc>(context).add()
-                  ScoutingData.edit(form, value, newValue);
-                }),
+              minValue: 0,
+              maxValue: 20,
+              initialValue: index,
+              onChanged: (newValue) {
+                BlocProvider.of<ScoutingFormBloc>(context).add(FormDataChanged(
+                  newForm: ScoutingData.edit(form, value, newValue),
+                ));
+              },
+            ),
           ],
         ),
       ),

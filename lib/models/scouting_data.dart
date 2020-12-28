@@ -44,36 +44,29 @@ class ScoutingData extends Equatable {
     this.amountOfPenalties = 0,
   });
 
-  static ScoutingData fromJson(
-      {@required Map<String, dynamic> json,
-      @required teamNumber,
-      @required matchId}) {
+  static ScoutingData fromJson({
+    @required Map<String, dynamic> json,
+    @required teamNumber,
+    @required matchId,
+  }) {
     return ScoutingData(
       teamNumber: teamNumber,
       matchId: matchId,
-      autonLine: (json["autonLine"] != null) ? json["autonLine"] : false,
-      autonLow: (json["autonLow"] != null) ? json["autonLow"] : false,
-      autonHigh: (json["autonHigh"] != null) ? json["autonHigh"] : false,
-      totalAutonAttempted: (json["totalAutonAttempted"] != null)
-          ? json["totalAutonAttempted"]
-          : 0,
-      totalAutonScored:
-          (json["totalAutonScored"] != null) ? json["totalAutonScored"] : 0,
-      lowScored: (json["lowScored"] != null) ? json["lowScored"] : 0,
-      outerScored: (json["outerScored"] != null) ? json["outerScored"] : 0,
-      innerScored: (json["innerScored"] != null) ? json["innerScored"] : 0,
-      attemptedLowScored:
-          (json["attemptedLowScored"] != null) ? json["attemptedLowScored"] : 0,
-      attemptedHighScored: (json["attemptedHighScored"] != null)
-          ? json["attemptedHighScored"]
-          : 0,
-      colorSpin: (json["colorSpin"] != null) ? json["colorSpin"] : false,
-      colorSelect: (json["colorSelect"] != null) ? json["colorSelect"] : false,
-      hanging: (json["hanging"] != null) ? json["hanging"].toDouble() : null,
-      amountOfStucks:
-          (json["amountOfStucks"] != null) ? json["amountOfStucks"] : 0,
-      amountOfPenalties:
-          (json["amountOfPenalties"] != null) ? json["amountOfPenalties"] : 0,
+      autonLine: json["autonLine"] ?? false,
+      autonLow: json["autonLow"] ?? false,
+      autonHigh: json["autonHigh"] ?? false,
+      totalAutonAttempted: json["totalAutonAttempted"] ?? 0,
+      totalAutonScored: json["totalAutonScored"] ?? 0,
+      lowScored: json["lowScored"] ?? 0,
+      outerScored: json["outerScored"] ?? 0,
+      innerScored: json["innerScored"] ?? 0,
+      attemptedLowScored: json["attemptedLowScored"] ?? 0,
+      attemptedHighScored: json["attemptedHighScored"] ?? 0,
+      colorSpin: json["colorSpin"] ?? false,
+      colorSelect: json["colorSelect"] ?? false,
+      hanging: json["hanging"].toDouble() ?? null,
+      amountOfStucks: json["amountOfStucks"] ?? 0,
+      amountOfPenalties: json["amountOfPenalties"] ?? 0,
     );
   }
 
@@ -92,12 +85,12 @@ class ScoutingData extends Equatable {
       outerScored: (key == "outerScored") ? value : form.outerScored,
       innerScored: (key == "innerScored") ? value : form.innerScored,
       attemptedLowScored:
-          (key == "attemptedHighScored") ? value : form.attemptedLowScored,
+          (key == "attemptedLowScored") ? value : form.attemptedLowScored,
       attemptedHighScored:
           (key == "attemptedHighScored") ? value : form.attemptedHighScored,
       colorSpin: (key == "colorSpin") ? value : form.colorSpin,
       colorSelect: (key == "colorSelect") ? value : form.colorSelect,
-      hanging: (key == "hanging") ? value : form.hanging,
+      hanging: (key == "hanging") ? value.toDouble() : form.hanging,
       amountOfStucks: (key == "amountOfStucks") ? value : form.amountOfStucks,
       amountOfPenalties:
           (key == "amountOfPenalties") ? value : form.amountOfPenalties,
@@ -141,11 +134,12 @@ class ScoutingData extends Equatable {
         lowScored,
         outerScored,
         innerScored,
+        attemptedLowScored,
         attemptedHighScored,
         colorSpin,
         colorSelect,
         hanging,
         amountOfStucks,
-        amountOfPenalties
+        amountOfPenalties,
       ];
 }

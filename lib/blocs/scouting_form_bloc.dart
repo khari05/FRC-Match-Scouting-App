@@ -29,5 +29,8 @@ class ScoutingFormBloc extends Bloc<ScoutingFormEvent, ScoutingFormState> {
         yield ScoutingFormLoadError();
       }
     }
+    if (event is FormDataChanged) {
+      yield ScoutingFormLoadSuccess(form: event.newForm);
+    }
   }
 }

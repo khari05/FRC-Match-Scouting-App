@@ -21,7 +21,7 @@ class ScoutingDataApiClient {
 
     if (formResponse.body != "") {
       return ScoutingData.fromJson(
-        json: json.decode(formResponse.body),
+        json: json.decode(formResponse.body)["data"],
         teamNumber: teamNumber,
         matchId: matchId,
       );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frc_scouting/blocs/blocs.dart';
 import 'package:frc_scouting/models/models.dart';
 
 class CheckboxCard extends StatelessWidget {
@@ -18,12 +19,13 @@ class CheckboxCard extends StatelessWidget {
           children: <Widget>[
             Flexible(child: Text(text)),
             Checkbox(
-                value: checked,
-                onChanged: (newValue) {
-                  // TODO update state
-                  // BlocProvider.of<ScoutingFormBloc>(context).add()
-                  ScoutingData.edit(form, value, newValue);
-                }),
+              value: checked,
+              onChanged: (newValue) {
+                BlocProvider.of<ScoutingFormBloc>(context).add(FormDataChanged(
+                  newForm: ScoutingData.edit(form, value, newValue),
+                ));
+              },
+            ),
           ],
         ),
       ),

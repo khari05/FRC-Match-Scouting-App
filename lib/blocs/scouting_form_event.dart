@@ -17,11 +17,10 @@ class FormRequested extends ScoutingFormEvent {
 }
 
 class FormDataChanged extends ScoutingFormEvent {
-  final String changedValue;
   final ScoutingData newForm;
 
-  const FormDataChanged({this.changedValue, this.newForm});
+  const FormDataChanged({@required this.newForm});
 
   @override
-  List<Object> get props => [changedValue, newForm];
+  List<Object> get props => [newForm];
 }

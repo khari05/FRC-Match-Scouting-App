@@ -76,10 +76,10 @@ class ScoutingFormPage extends StatelessWidget {
                           title: Text("Defense"),
                           children: [
                             /** //TODO add in defense options
-                       * did the team play defense
-                       * did the team get any penalties while playing defense
-                       * # of times they prevented the opposing team from scoring
-                       **/
+                             * did the team play defense
+                             * did the team get any penalties while playing defense
+                             * # of times they prevented the opposing team from scoring
+                             **/
                           ],
                         ),
                         ExpansionTile(
@@ -89,30 +89,35 @@ class ScoutingFormPage extends StatelessWidget {
                           initiallyExpanded: false,
                           children: [
                             CheckboxCard(
-                                state.form,
-                                "autonLine",
-                                state.form.autonLine,
-                                "Does the team get off of the line?"),
+                              state.form,
+                              "autonLine",
+                              state.form.autonLine,
+                              "Does the team get off of the line?",
+                            ),
                             CheckboxCard(
-                                state.form,
-                                "autonLow",
-                                state.form.autonLow,
-                                "Does the team score in the low goal?"),
+                              state.form,
+                              "autonLow",
+                              state.form.autonLow,
+                              "Does the team score in the low goal?",
+                            ),
                             CheckboxCard(
-                                state.form,
-                                "autonHigh",
-                                state.form.autonHigh,
-                                "Does the team score in the high goal?"),
+                              state.form,
+                              "autonHigh",
+                              state.form.autonHigh,
+                              "Does the team score in the high goal?",
+                            ),
                             NumberCard(
-                                state.form,
-                                "totalAutonScored",
-                                state.form.totalAutonScored,
-                                "Total balls scored during autonomous"),
+                              state.form,
+                              "totalAutonScored",
+                              state.form.totalAutonScored,
+                              "Total balls scored during autonomous",
+                            ),
                             NumberCard(
-                                state.form,
-                                "totalAutonAttempted",
-                                state.form.totalAutonAttempted,
-                                "Total balls attempted to be scored during autonomous"),
+                              state.form,
+                              "totalAutonAttempted",
+                              state.form.totalAutonAttempted,
+                              "Total balls attempted to be scored during autonomous",
+                            ),
                           ],
                         ),
                         ExpansionTile(
@@ -122,30 +127,35 @@ class ScoutingFormPage extends StatelessWidget {
                           initiallyExpanded: false,
                           children: [
                             NumberCard(
-                                state.form,
-                                "lowScored",
-                                state.form.lowScored,
-                                "Total scored in the low goal"),
+                              state.form,
+                              "lowScored",
+                              state.form.lowScored,
+                              "Total scored in the low goal",
+                            ),
                             NumberCard(
-                                state.form,
-                                "outerScored",
-                                state.form.outerScored,
-                                "Total scored in the outer goal"),
+                              state.form,
+                              "outerScored",
+                              state.form.outerScored,
+                              "Total scored in the outer goal",
+                            ),
                             NumberCard(
-                                state.form,
-                                "innerScored",
-                                state.form.innerScored,
-                                "Total scored in the inner goal"),
+                              state.form,
+                              "innerScored",
+                              state.form.innerScored,
+                              "Total scored in the inner goal",
+                            ),
                             NumberCard(
-                                state.form,
-                                "attemptedLowScored",
-                                state.form.attemptedLowScored,
-                                "Total attempted to score in the low goal"),
+                              state.form,
+                              "attemptedLowScored",
+                              state.form.attemptedLowScored,
+                              "Total attempted to score in the low goal",
+                            ),
                             NumberCard(
-                                state.form,
-                                "attemptedHighScored",
-                                state.form.attemptedHighScored,
-                                "Total attempted to score in the high goal"),
+                              state.form,
+                              "attemptedHighScored",
+                              state.form.attemptedHighScored,
+                              "Total attempted to score in the high goal",
+                            ),
                           ],
                         ),
                         ExpansionTile(
@@ -155,26 +165,30 @@ class ScoutingFormPage extends StatelessWidget {
                           initiallyExpanded: false,
                           children: [
                             CheckboxCard(
-                                state.form,
-                                "colorSpin",
-                                state.form.colorSpin,
-                                "Does the team spin the Control Panel 3 times? (stage 2)"),
+                              state.form,
+                              "colorSpin",
+                              state.form.colorSpin,
+                              "Does the team spin the Control Panel 3 times? (stage 2)",
+                            ),
                             CheckboxCard(
-                                state.form,
-                                "colorSelect",
-                                state.form.colorSelect,
-                                "Does the team spin the Control Panel to a specific color? (stage 3)"),
+                              state.form,
+                              "colorSelect",
+                              state.form.colorSelect,
+                              "Does the team spin the Control Panel to a specific color? (stage 3)",
+                            ),
                             HangDropdown(state.form),
                             NumberCard(
-                                state.form,
-                                "amountOfStucks",
-                                state.form.amountOfStucks,
-                                "Number of times the robot gets stuck"),
+                              state.form,
+                              "amountOfStucks",
+                              state.form.amountOfStucks,
+                              "Number of times the robot gets stuck",
+                            ),
                             NumberCard(
-                                state.form,
-                                "amountOfPenalties",
-                                state.form.amountOfPenalties,
-                                "Number of penalties the team gets"),
+                              state.form,
+                              "amountOfPenalties",
+                              state.form.amountOfPenalties,
+                              "Number of penalties the team gets",
+                            ),
                           ],
                         ),
                       ],
