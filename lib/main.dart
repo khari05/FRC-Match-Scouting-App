@@ -7,7 +7,7 @@ import 'package:frc_scouting/ui/pages/event_list_page.dart';
 import 'package:http/http.dart' as http;
 
 // initialize constants
-final String baseUrl = "http://localhost:3000";
+final String baseUrl = "https://frc-match-scouting.herokuapp.com";
 
 void main() {
   Bloc.observer = SimpleBlocObserver();
@@ -19,13 +19,13 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(brightness: Brightness.dark, primarySwatch: Colors.teal),
-      home: EventListPage(
+      home: EventListPage( // need to put app contents in a subclass in order to be able to call navigator
         eventRepository: EventRepository(
           eventApiClient: EventApiClient(
             httpClient: http.Client(),
           ),
         ),
-      ), // need to put app contents in a subclass in order to be able to call navigator
+      ),
     );
   }
 }
