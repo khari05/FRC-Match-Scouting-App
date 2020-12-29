@@ -1,4 +1,4 @@
-package com.mrcoderboy345.frc_scouting
+package com.khari05.frc_scouting
 
 import io.flutter.embedding.android.FlutterActivity
 
