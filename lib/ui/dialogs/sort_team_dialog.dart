@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SortTeamDialog extends StatefulWidget {
-  final int sortMethod;
-  final bool ascending;
-
-  const SortTeamDialog(
-      {Key key, @required this.sortMethod, @required this.ascending})
-      : super(key: key);
+  const SortTeamDialog({Key key}) : super(key: key);
 
   @override
   _SortTeamDialogState createState() => _SortTeamDialogState();

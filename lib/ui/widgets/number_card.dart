@@ -21,7 +21,7 @@ class NumberCard extends StatelessWidget {
             Flexible(child: Text(text)),
             NumberPicker.integer(
               minValue: 0,
-              maxValue: 20,
+              maxValue: 60,
               initialValue: index,
               onChanged: (newValue) {
                 BlocProvider.of<ScoutingFormBloc>(context).add(FormDataChanged(

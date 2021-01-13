@@ -78,10 +78,7 @@ class TeamListPage extends StatelessWidget {
                         onPressed: () {
                           showDialog(
                             context: (context),
-                            child: SortTeamDialog(
-                              sortMethod: sortMethod,
-                              ascending: ascending,
-                            ),
+                            builder: (context) => SortTeamDialog(),
                           ).then(
                             (value) {
                               if (value != null) {
