@@ -73,16 +73,6 @@ class ScoutingFormPage extends StatelessWidget {
                     child: ListView(
                       children: <Widget>[
                         ExpansionTile(
-                          title: Text("Defense"),
-                          children: [
-                            /** //TODO add in defense options
-                             * did the team play defense
-                             * did the team get any penalties while playing defense
-                             * # of times they prevented the opposing team from scoring
-                             **/
-                          ],
-                        ),
-                        ExpansionTile(
                           title: Text(
                             "Autonomous",
                           ),
@@ -117,6 +107,29 @@ class ScoutingFormPage extends StatelessWidget {
                               "totalAutonAttempted",
                               state.form.totalAutonAttempted,
                               "Total balls attempted to be scored during autonomous",
+                            ),
+                          ],
+                        ),
+                        ExpansionTile(
+                          title: Text("Defense"),
+                          children: [
+                            CheckboxCard(
+                              state.form,
+                              "isDefense",
+                              state.form.isDefense,
+                              "Does the team play defense",
+                            ),
+                            CheckboxCard(
+                              state.form,
+                              "defensePenalty",
+                              state.form.defensePenalty,
+                              "Does the team get more than 2 penalties while playing defense",
+                            ),
+                            NumberCard(
+                              state.form,
+                              "scoresPrevented",
+                              state.form.scoresPrevented,
+                              "Number of times the team prevented an opposing team from scoring",
                             ),
                           ],
                         ),
@@ -194,9 +207,8 @@ class ScoutingFormPage extends StatelessWidget {
                       ],
                     ),
                   );
-                } else {
-                  return CircularProgressIndicator();
                 }
+                return CircularProgressIndicator();
               },
             ),
           ),

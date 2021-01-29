@@ -11,6 +11,10 @@ class ScoutingData extends Equatable {
   final int totalAutonAttempted;
   final int totalAutonScored;
 
+  final bool isDefense;
+  final bool defensePenalty;
+  final int scoresPrevented;
+
   final int lowScored;
   final int outerScored;
   final int innerScored;
@@ -32,6 +36,9 @@ class ScoutingData extends Equatable {
     this.autonHigh = false,
     this.totalAutonAttempted = 0,
     this.totalAutonScored = 0,
+    this.isDefense = false,
+    this.defensePenalty = false,
+    this.scoresPrevented = 0,
     this.lowScored = 0,
     this.outerScored = 0,
     this.innerScored = 0,
@@ -57,6 +64,9 @@ class ScoutingData extends Equatable {
       autonHigh: json["autonHigh"] ?? false,
       totalAutonAttempted: json["totalAutonAttempted"] ?? 0,
       totalAutonScored: json["totalAutonScored"] ?? 0,
+      isDefense: json["isDefense"] ?? false,
+      defensePenalty: json["defensePenalty"] ?? false,
+      scoresPrevented: json["scoresPrevented"] ?? 0,
       lowScored: json["lowScored"] ?? 0,
       outerScored: json["outerScored"] ?? 0,
       innerScored: json["innerScored"] ?? 0,
@@ -81,6 +91,9 @@ class ScoutingData extends Equatable {
           (key == "totalAutonAttempted") ? value : form.totalAutonAttempted,
       totalAutonScored:
           (key == "totalAutonScored") ? value : form.totalAutonScored,
+      isDefense: (key == "isDefense") ? value : form.isDefense,
+      defensePenalty: (key == "defensePenalty") ? value : form.defensePenalty,
+      scoresPrevented: (key == "scoresPrevented") ? value : form.scoresPrevented,
       lowScored: (key == "lowScored") ? value : form.lowScored,
       outerScored: (key == "outerScored") ? value : form.outerScored,
       innerScored: (key == "innerScored") ? value : form.innerScored,
@@ -105,6 +118,9 @@ class ScoutingData extends Equatable {
         "autonHigh": autonHigh,
         "totalAutonAttempted": totalAutonAttempted,
         "totalAutonScored": totalAutonScored,
+        "isDefense": isDefense,
+        "defensePenalty": defensePenalty,
+        "scoresPrevented": scoresPrevented,
         "lowScored": lowScored,
         "outerScored": outerScored,
         "innerScored": innerScored,
@@ -131,6 +147,9 @@ class ScoutingData extends Equatable {
         autonHigh,
         totalAutonAttempted,
         totalAutonScored,
+        isDefense,
+        defensePenalty,
+        scoresPrevented,
         lowScored,
         outerScored,
         innerScored,
