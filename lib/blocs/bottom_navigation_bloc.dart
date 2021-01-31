@@ -15,7 +15,7 @@ class BottomNavigationBloc
     @required this.matchRepository,
     @required this.teamRepository,
     @required this.blueAllianceId,
-  }) : assert(matchRepository != null),
+  })  : assert(matchRepository != null),
         assert(teamRepository != null),
         super(BottomNavigationInitial());
 
@@ -34,7 +34,7 @@ class BottomNavigationBloc
           if (matches.length == 0) {
             yield MatchPageEmpty();
           } else {
-            yield MatchPageLoaded(matches: matches);
+            yield MatchPageLoaded(matches: matches, viewTeamName: false);
           }
         }
         if (currentIndex == 1) {
@@ -43,15 +43,23 @@ class BottomNavigationBloc
             yield TeamPageEmpty();
           } else {
             yield TeamPageLoaded(
-                teams: teams,
-                ascending: event.ascending ?? true,
-                sortMethod: event.sortMethod ?? 0);
+              teams: teams,
+              ascending: event.ascending ?? true,
+              sortMethod: event.sortMethod ?? 0,
+            );
           }
         }
       } catch (err) {
         yield PageLoadError();
         print(err);
       }
+    }
+
+    if (event is MatchViewToggled) {
+      yield MatchPageLoaded(
+        matches: event.matches,
+        viewTeamName: event.viewTeamName,
+      );
     }
 
     if (event is SortChanged) {
@@ -68,7 +76,10 @@ class BottomNavigationBloc
             (b.getValue(sortMethod).compareTo(a.getValue(sortMethod))));
       }
       yield TeamPageLoaded(
-          teams: teams, sortMethod: sortMethod, ascending: event.ascending);
+        teams: teams,
+        sortMethod: sortMethod,
+        ascending: event.ascending,
+      );
     }
   }
 }

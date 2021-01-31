@@ -17,13 +17,26 @@ class PageSwitched extends BottomNavigationEvent {
   List<Object> get props => [index];
 }
 
+class MatchViewToggled extends BottomNavigationEvent {
+  final List<MatchObject> matches;
+  final bool viewTeamName;
+
+  MatchViewToggled({@required this.matches, @required this.viewTeamName});
+
+  @override
+  List<Object> get props => [matches, viewTeamName];
+}
+
 class SortChanged extends BottomNavigationEvent {
   final List<Team> teams;
   final int sortMethod;
   final bool ascending;
 
-  const SortChanged(this.teams,
-      {@required this.sortMethod, @required this.ascending});
+  const SortChanged(
+    this.teams, {
+    @required this.sortMethod,
+    @required this.ascending,
+  });
 
   @override
   List<Object> get props => [sortMethod, ascending, teams];

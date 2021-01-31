@@ -42,6 +42,21 @@ class EventPages extends StatelessWidget {
                         .add(PageSwitched(index: 1));
                   },
                 );
+              }
+              if (state is MatchPageLoaded) {
+                return Tooltip(
+                  message: "Show Team Names",
+                  child: Switch.adaptive(
+                    value: state.viewTeamName,
+                    onChanged: (newValue) {
+                      BlocProvider.of<BottomNavigationBloc>(context)
+                          .add(MatchViewToggled(
+                        matches: state.matches,
+                        viewTeamName: newValue,
+                      ));
+                    },
+                  ),
+                );
               } else {
                 return Container();
               }

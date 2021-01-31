@@ -26,11 +26,13 @@ class PageLoading extends BottomNavigationState {}
 
 class MatchPageLoaded extends BottomNavigationState {
   final List<MatchObject> matches;
+  final bool viewTeamName;
 
-  MatchPageLoaded({@required this.matches}) : assert(matches != null);
+  MatchPageLoaded({@required this.matches, @required this.viewTeamName})
+      : assert(matches != null);
 
   @override
-  List<Object> get props => [matches];
+  List<Object> get props => [matches, viewTeamName];
 }
 
 class MatchPageEmpty extends BottomNavigationState {}
@@ -40,7 +42,11 @@ class TeamPageLoaded extends BottomNavigationState {
   final int sortMethod;
   final bool ascending;
 
-  TeamPageLoaded({@required this.teams, @required this.sortMethod, @required this.ascending}) : assert(teams != null);
+  TeamPageLoaded({
+    @required this.teams,
+    @required this.sortMethod,
+    @required this.ascending,
+  }) : assert(teams != null);
 }
 
 class TeamPageEmpty extends BottomNavigationState {}
