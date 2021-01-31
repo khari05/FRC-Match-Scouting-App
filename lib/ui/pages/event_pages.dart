@@ -17,6 +17,7 @@ class EventPages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScrollController controller = ScrollController();
     return BlocProvider(
       create: (context) => BottomNavigationBloc(
         matchRepository: MatchRepository(
@@ -74,16 +75,20 @@ class EventPages extends StatelessWidget {
               }
               if (state is MatchPageLoaded) {
                 return MatchListPage(
-                    eventKey: eventKey, matches: state.matches);
+                  eventKey: eventKey,
+                  matches: state.matches,
+                  scrollController: controller,
+                );
               }
               if (state is MatchPageEmpty) {
                 return MatchReqPage(eventKey: eventKey);
               }
               if (state is TeamPageLoaded) {
                 return TeamListPage(
-                    teams: state.teams,
-                    sortMethod: state.sortMethod,
-                    ascending: state.ascending);
+                  teams: state.teams,
+                  sortMethod: state.sortMethod,
+                  ascending: state.ascending,
+                );
               }
               if (state is TeamPageEmpty) {
                 return TeamReqPage(
@@ -105,9 +110,13 @@ class EventPages extends StatelessWidget {
                       .currentIndex,
                   items: <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
-                        icon: Icon(Icons.trending_up), label: "Matches"),
+                      icon: Icon(Icons.trending_up),
+                      label: "Matches",
+                    ),
                     BottomNavigationBarItem(
-                        icon: Icon(Icons.people), label: "Teams"),
+                      icon: Icon(Icons.people),
+                      label: "Teams",
+                    ),
                   ],
                   onTap: (newValue) {
                     BlocProvider.of<BottomNavigationBloc>(context)
@@ -118,6 +127,35 @@ class EventPages extends StatelessWidget {
             );
           },
         ),
+        floatingActionButton: Builder(builder: (context) {
+          double jumpDistance = MediaQuery.of(context).size.height * 2.3;
+          return BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
+            builder: (context, state) {
+              if (state is MatchPageLoaded) {
+                return FloatingActionButton(
+                  child: Icon(Icons.arrow_downward),
+                  onPressed: () {
+                    if (controller.position.extentAfter > jumpDistance) {
+                      controller.animateTo(
+                        controller.position.pixels + jumpDistance,
+                        duration: Duration(milliseconds: 250),
+                        curve: Curves.decelerate
+                      );
+                    } else {
+                      controller.animateTo(
+                        controller.position.pixels +
+                            controller.position.extentAfter,
+                        duration: Duration(milliseconds: 125),
+                        curve: Curves.decelerate
+                      );
+                    }
+                  },
+                );
+              }
+              return Container();
+            },
+          );
+        }),
       ),
     );
   }

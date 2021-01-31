@@ -29,14 +29,19 @@ class MatchReqPage extends StatelessWidget {
 class MatchListPage extends StatelessWidget {
   final String eventKey;
   final List<MatchObject> matches;
+  final ScrollController scrollController;
 
-  const MatchListPage(
-      {Key key, @required this.eventKey, @required this.matches})
-      : super(key: key);
+  const MatchListPage({
+    Key key,
+    @required this.eventKey,
+    @required this.matches,
+    this.scrollController,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      controller: scrollController,
       itemCount: matches.length,
       itemBuilder: (context, index) {
         return Container(
@@ -146,14 +151,15 @@ class TeamButton extends StatelessWidget {
                     : teamNumber.toString(),
               ),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (BuildContext context) {
-                  return ScoutingFormPage(
-                    teamNumber: teamNumber,
-                    matchId: matchId,
-                    eventKey: eventKey,
-                  );
-                }));
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return ScoutingFormPage(
+                      teamNumber: teamNumber,
+                      matchId: matchId,
+                      eventKey: eventKey,
+                    );
+                  },
+                ));
               },
             ),
           );
